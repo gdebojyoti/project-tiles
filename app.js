@@ -1,104 +1,5 @@
-console.log("I got in!")
-
-// configuration values for the game
-const CONFIG = {
-  TILE_SIZE: 50,
-  TILE_GAP: 10
-}
-
-// directions
-const DIR = {
-	LEFT: 'left',
-  RIGHT: 'right',
-  UP: 'up',
-  DOWN: 'down'
-}
-
-// access colors from CSS variables
-const computedStyle = getComputedStyle(document.documentElement)
-const COLORS = {
-  [DIR.LEFT]: computedStyle.getPropertyValue('--azure'),
-  [DIR.RIGHT]: computedStyle.getPropertyValue('--crimson'),
-  [DIR.UP]: computedStyle.getPropertyValue('--amber'),
-  [DIR.DOWN]: computedStyle.getPropertyValue('--emerald')
-}
-
-const IMAGE_PATHS = {
-  [DIR.LEFT]: './assets/blue.png',
-  [DIR.RIGHT]: './assets/red.png',
-  [DIR.UP]: './assets/yellow.png',
-  [DIR.DOWN]: './assets/green.png'
-}
-
-// sample map data for the game
-const sampleMapData = {
-  positionCompensation: {
-    x: 0,
-    y: -30
-  },
-  cells: [
-    {
-      isBase: true,
-      col: 1,
-      row: 1
-    },
-    {
-      col: 1,
-      row: 2,
-      dir: DIR.UP
-    },
-    {
-      col: 2,
-      row: 2,
-      dir: DIR.RIGHT
-    },
-    {
-      col: 3,
-      row: 2,
-      dir: DIR.RIGHT
-    },
-    {
-      col: 4,
-      row: 2,
-      dir: DIR.RIGHT
-    },
-    {
-      col: 4,
-      row: 3,
-      dir: DIR.UP
-    },
-    {
-      col: 4,
-      row: 4,
-      dir: DIR.UP
-    },
-    {
-      col: 3,
-      row: 4,
-      dir: DIR.LEFT
-    },
-    {
-      col: 2,
-      row: 4,
-      dir: DIR.LEFT
-    },
-    {
-      col: 1,
-      row: 4,
-      dir: DIR.DOWN
-    },
-    {
-      col: 1,
-      row: 5,
-      dir: DIR.LEFT
-    },
-    {
-      col: 2,
-      row: 5,
-      dir: DIR.UP
-    }
-  ]
-}
+import initGameFlow from './scripts/gameLogic.js'
+import { CONFIG, DIR, IMAGE_PATHS } from './scripts/constants.js'
 
 function initScene (mapData) {
   const { TILE_SIZE, TILE_GAP } = CONFIG
@@ -133,7 +34,7 @@ function initScene (mapData) {
 
 function createCell (data, highestRow) {
   const { TILE_SIZE, TILE_GAP } = CONFIG
-  const { row, col, dir } = data
+  const { id, row, col, dir } = data
   
   // create cell element
   const cellElm = document.createElement('div')
@@ -142,6 +43,9 @@ function createCell (data, highestRow) {
   cellElm.classList.add('cell')
   cellElm.style.width = `${TILE_SIZE}px`
   cellElm.style.height = `${TILE_SIZE}px`
+
+  // set data attribute
+  cellElm.setAttribute('data-cell-id', id)
 
   // using `left` & `top` properties since `transform` will be used for animation
   cellElm.style.left = `${(col - 1) * (TILE_SIZE + TILE_GAP)}px`
@@ -154,22 +58,28 @@ function createCell (data, highestRow) {
   if (dir) {
     // create image element to indicate direction in the cell
     const imgElm = document.createElement('img')
+
+    let classNameSuffix = ''
     
-    // add class & style to image element
+    // add class & style to image element; and update classNameSuffix
     imgElm.classList.add('arrow')
     switch (dir) {
       case DIR.LEFT:
+        classNameSuffix = 'left'
         imgElm.src = IMAGE_PATHS[DIR.LEFT]
         imgElm.style.transform = 'rotate(-90deg)'
         break
       case DIR.RIGHT:
+        classNameSuffix = 'right'
         imgElm.src = IMAGE_PATHS[DIR.RIGHT]
         imgElm.style.transform = 'rotate(90deg)'
         break
       case DIR.UP:
+        classNameSuffix = 'up'
         imgElm.src = IMAGE_PATHS[DIR.UP]
         break
       case DIR.DOWN:
+        classNameSuffix = 'down'
         imgElm.src = IMAGE_PATHS[DIR.DOWN]
         imgElm.style.transform = 'rotate(180deg)'
         break
@@ -177,6 +87,9 @@ function createCell (data, highestRow) {
     
     // add image element to cell element
     cellElm.appendChild(imgElm)
+
+    // add class name to cell element
+    cellElm.classList.add(`cell--${classNameSuffix}`)
   } else {
     // if direction does not exist, add color to cell
     cellElm.classList.add('cell--base')
@@ -207,5 +120,17 @@ function initButtons () {
   })
 }
 
-initScene(sampleMapData)
-initButtons()
+window.onload = async () => {
+  console.log("I got in!")
+  
+  // sample map data for the game
+  const sampleMapData = await fetch('./sample.json').then(res => res.json())
+
+  // initialize scene
+  initScene(sampleMapData)
+  
+  // initialize buttons
+  initButtons()
+  
+  initGameFlow(sampleMapData.cells)
+}

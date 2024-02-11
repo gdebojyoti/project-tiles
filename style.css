@@ -1,0 +1,129 @@
+/* reset */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* colors */
+:root {
+  --base-light-color: #ecf0f1;
+
+  --crimson: #c0392b;
+  --azure: #2980b9;
+  --emerald: #2ecc71;
+  --amber: #f39c12;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: Lato, sans-serif;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--base-light-color);
+  background-image: linear-gradient(160deg, #4CB8C4, #3CD3AD);
+  overflow: hidden;
+  user-select: none; /* prevent text selection since this is just a game */
+}
+
+.screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+}
+
+.scene {
+  position: relative;
+  margin-inline: auto;
+  transform: rotateX(55deg) rotateY(0deg) rotateZ(45deg);
+}
+
+.cell {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--base-light-color);
+  border-radius: 8px;
+  
+  opacity: 0;
+  /* transform: scale(0); */
+  animation: popin .4s ease-in-out forwards;
+}
+@keyframes popin {
+  0% {
+    opacity: 0;
+    /* transform: scale(0); */
+    translate: 20px 20px;
+  }
+  100% {
+    opacity: 1;
+    /* transform: scale(1); */
+  }
+}
+/* .cell--base {
+  background-color: #333a;
+} */
+
+.arrow {
+  width: 60%;
+  height: 60%;
+}
+
+.header {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 25px;
+}
+.header .icon {
+  position: absolute;
+  right: 25px;
+  width: 30px;
+  height: 30px;
+}
+
+.step-counter-wrapper {
+  text-align: center;
+}
+.step-counter {
+  display: inline-block;
+  margin-top: 5px;
+  font-size: 25px;
+}
+
+.nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 25px 25px;
+}
+.nav .icon {
+  margin-left: 50px;
+}
+.nav .icon:first-of-type {
+  margin-left: 0;
+}
+
+.icon {
+  display: flex;
+  align-items: flex-end;
+  height: 50px;
+  background: center top / 30px no-repeat;
+  cursor: pointer;
+}
+.icon--undo { background-image: url('./assets/icons/undo.png'); background-size: 33px; }
+.icon--home { background-image: url('./assets/icons/home.png'); }
+.icon--settings { background-image: url('./assets/icons/settings.png'); }
+.icon--mute { background-image: url('./assets/icons/mute.png'); }
+.icon--unmute { background-image: url('./assets/icons/unmute.png'); }
+.icon--disabled {
+  pointer-events: none;
+  opacity: .5;
+}

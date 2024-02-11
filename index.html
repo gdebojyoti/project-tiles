@@ -1,0 +1,37 @@
+<!doctype html>
+
+<html>
+  <head>
+    <title>Project Tiles</title>
+    <link rel="stylesheet" href="./style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400&display=swap" rel="stylesheet"> 
+  </head>
+  <body>
+    <div id="screen" class="screen">
+      <header class="header">
+        <div class="step-counter-wrapper">
+          Steps<br><span id="step-counter" class="step-counter">8</span>
+        </div>
+
+        <span data-icon="mute" class="icon icon--mute"></span>
+      </header>
+
+      <div id="scene" class="scene">
+        <!-- <div class="cell"></div> -->
+      </div>
+
+      <footer class="nav">
+        <span data-icon="undo" class="icon icon--undo">Undo</span>
+        <span data-icon="home" class="icon icon--home icon--disabled">Home</span>
+        <span data-icon="settings" class="icon icon--settings icon--disabled">Settings</span>
+      </footer>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

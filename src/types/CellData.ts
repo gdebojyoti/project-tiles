@@ -1,10 +1,9 @@
 type CellData = {
   id: number
-  row: number
   col: number
-  type: string
+  row: number
+  isBase: boolean
   dir: string
-  isOccupied: boolean
 }
 
 export default CellData

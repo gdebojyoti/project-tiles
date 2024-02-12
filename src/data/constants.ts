@@ -1,7 +1,7 @@
-import blueArrow from '../../assets/blue.png'
-import redArrow from '../../assets/red.png'
-import yellowArrow from '../../assets/yellow.png'
-import greenArrow from '../../assets/green.png'
+import blueArrow from '../assets/blue.png'
+import redArrow from '../assets/red.png'
+import yellowArrow from '../assets/yellow.png'
+import greenArrow from '../assets/green.png'
 
 // configuration values for the game
 export const CONFIG = {

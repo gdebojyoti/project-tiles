@@ -136,11 +136,11 @@ body {
   filter: drop-shadow(0 0 2px rgba(0, 0, 0, .3));
   cursor: pointer;
 }
-.icon--undo { background-image: url('./assets/icons/undo.png'); background-size: 33px; }
-.icon--home { background-image: url('./assets/icons/home.png'); }
-.icon--settings { background-image: url('./assets/icons/settings.png'); }
-.icon--mute { background-image: url('./assets/icons/mute.png'); }
-.icon--unmute { background-image: url('./assets/icons/unmute.png'); }
+.icon--undo { background-image: url('../assets/icons/undo.png'); background-size: 33px; }
+.icon--home { background-image: url('../assets/icons/home.png'); }
+.icon--settings { background-image: url('../assets/icons/settings.png'); }
+.icon--mute { background-image: url('../assets/icons/mute.png'); }
+.icon--unmute { background-image: url('../assets/icons/unmute.png'); }
 .icon--disabled {
   pointer-events: none;
   opacity: .5;
@@ -154,7 +154,7 @@ body {
   width: 30px;
   height: 30px;
   opacity: 0;
-  background: url(./assets/tokens/token-1.png) center center / contain no-repeat;
+  background: url('../assets/tokens/token-1.png') center center / contain no-repeat;
   border-radius: 50%;
   transition: all .2s;
   pointer-events: none;

@@ -9,6 +9,9 @@ module.exports = {
     path: path.resolve(__dirname, 'dist')
   },
   resolve: {
+    // alias: {
+    //   models: path.resolve(__dirname, 'src/models/')
+    // },
     extensions: ['.ts', '.js']
   },
   module: {
@@ -21,6 +24,10 @@ module.exports = {
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        type: 'asset/resource',
       }
     ]
   },

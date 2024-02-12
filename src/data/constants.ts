@@ -1,3 +1,8 @@
+import blueArrow from '../../assets/blue.png'
+import redArrow from '../../assets/red.png'
+import yellowArrow from '../../assets/yellow.png'
+import greenArrow from '../../assets/green.png'
+
 // configuration values for the game
 export const CONFIG = {
   TILE_SIZE: 50,
@@ -14,8 +19,8 @@ export const DIR = {
 
 // assets
 export const IMAGE_PATHS = {
-  [DIR.LEFT]: './assets/blue.png',
-  [DIR.RIGHT]: './assets/red.png',
-  [DIR.UP]: './assets/yellow.png',
-  [DIR.DOWN]: './assets/green.png'
+  [DIR.LEFT]: blueArrow,
+  [DIR.RIGHT]: redArrow,
+  [DIR.UP]: yellowArrow,
+  [DIR.DOWN]: greenArrow
 }

@@ -25,8 +25,17 @@ body {
   text-transform: uppercase;
   color: var(--base-light-color);
   background-image: linear-gradient(160deg, #4CB8C4, #3CD3AD);
+  /* background-image: linear-gradient(160deg, #EECDA3, #EF629F); */
+  /* background-image: linear-gradient(160deg, red, blue); */
+  background-size: 400% 400%;
   overflow: hidden;
   user-select: none; /* prevent text selection since this is just a game */
+  animation: animatedGradient 5s ease infinite;
+}
+@keyframes animatedGradient {
+  0%{background-position:76% 0%}
+  50%{background-position:25% 100%}
+  100%{background-position:76% 0%}
 }
 
 .screen {
@@ -124,6 +133,7 @@ body {
   align-items: flex-end;
   height: 50px;
   background: center top / 30px no-repeat;
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, .3));
   cursor: pointer;
 }
 .icon--undo { background-image: url('./assets/icons/undo.png'); background-size: 33px; }
@@ -134,6 +144,7 @@ body {
 .icon--disabled {
   pointer-events: none;
   opacity: .5;
+  filter: none;
 }
 
 .token {
@@ -151,3 +162,20 @@ body {
 .token--visible {
   opacity: 1;
 }
+
+/* .shake {
+  animation: shake .5s 1;
+}
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+} */

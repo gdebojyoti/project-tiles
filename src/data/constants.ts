@@ -11,7 +11,7 @@ export const CONFIG = {
 
 // directions
 export const DIR = {
-	LEFT: 'LEFT',
+  LEFT: 'LEFT',
   RIGHT: 'RIGHT',
   UP: 'UP',
   DOWN: 'DOWN'

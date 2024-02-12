@@ -6,7 +6,7 @@
   "scripts": {
     "tsc": "tsc --init",
     "start": "webpack serve --mode development",
-    "build": "webpack"
+    "build": "webpack --mode production"
   },
   "keywords": [],
   "author": "",

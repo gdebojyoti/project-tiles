@@ -1,9 +1,10 @@
 type CellData = {
-  id: number
+  id: string
   col: number
   row: number
   isBase: boolean
   dir: string
+  isComplete: boolean
 }
 
 export default CellData

@@ -1,7 +1,8 @@
 import '../style.css'
 
-function greet(text: string) {
-  console.log(`${text}!`)
-}
+import Game from './models/Game'
 
-greet("I got in")
+window.onload = async () => {
+  const game = new Game()
+  game.init()
+}

@@ -1,10 +1,10 @@
 import { CONFIG } from '../data/constants'
 import Cell from './Cell'
+import Engine from './Engine'
 
 import CellData from '../types/CellData'
 
 class Game {
-  // private _currentlyOccupiedCell: any = 5
   private _mapData: any = null
 
   async init (): Promise<void> {
@@ -16,6 +16,8 @@ class Game {
     this.initScene()
 
     this.initButtons()
+
+    const engine = new Engine(this._mapData.cells)
   }
 
   private async loadMap (level: number): Promise<any> {

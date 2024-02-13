@@ -4,7 +4,7 @@ type CellData = {
   row: number
   isBase: boolean
   dir: string
-  completionCount: number // use a count instead of a boolean flag to allow for multiple steps (and "undo"ing) in the same direction
+  stepResults: boolean[] // maintain a record of the results of the steps taken by the user over this cell, to support "undo"
 }
 
 export default CellData

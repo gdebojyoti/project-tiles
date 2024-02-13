@@ -135,11 +135,11 @@ class Engine {
   
     const { dir } = clickedCell
     
-    // if move is same as `dir` of clicked cell, increment completion count; else reset it to 0
-    if (direction === dir) {
-      clickedCell.completionCount = clickedCell.completionCount ? clickedCell.completionCount + 1 : 1
+    // save whether move is same as `dir` of clicked cell
+    if (clickedCell.stepResults) {
+      clickedCell.stepResults.push(direction === dir)
     } else {
-      clickedCell.completionCount = 0
+      clickedCell.stepResults = [direction === dir]
     }
   }
 
@@ -158,7 +158,12 @@ class Engine {
   }
 
   private checkGameCompletion (): void {
-    const isGameComplete = this._allCellData.every(({ isBase, completionCount }) => isBase || completionCount)
+    // check if all cells are complete
+    const isGameComplete = this._allCellData.every(({ isBase, stepResults }) => {
+      // if cell is base, or if the last step result is true, then the cell is complete
+      const lastStepResult = stepResults ? stepResults[stepResults.length - 1] : false
+      return isBase || lastStepResult
+    })
 
     if (isGameComplete) {
       // stop the game
@@ -173,14 +178,14 @@ class Engine {
     }
   }
 
-  // undo the last step
+  // undo the most recent step (i.e., move the token from the current cell to the last cell it was in)
   undo (): void {
     // exit if game is not in progress
     if (!this._isInProgress) {
       return
     }
 
-    // get last location of token
+    // get most recent location of token
     const lastLocationId = this._steps[this._steps.length - 1] // the last cell that the token was in
     const lastCell = this._allCellData.find(cell => cell.id === lastLocationId)
 
@@ -193,16 +198,11 @@ class Engine {
       return
     }
 
-    // check if the last move caused the cell's completion count to increase; if yes, reduce the completion count by 1
-    const lastMovedDirection = Utils.getDirection(lastCell, currentCell)
-    if (lastMovedDirection === currentCell.dir) {
-      currentCell.completionCount--
+    // remove the last step result from current cell
+    currentCell.stepResults.pop()
 
-      // update cell UI, if applicable
-      if (currentCell.completionCount === 0) {
-        Utils.updateCellUi(this._allCellData)
-      }
-    }
+    // update cell UI
+    Utils.updateCellUi(this._allCellData)
 
     // update state of currently occupied cell
     this._currentlyOccupiedCell = lastLocationId
@@ -245,7 +245,7 @@ class Engine {
 
     // reset the completion count of all cells
     this._allCellData.forEach(cell => {
-      cell.completionCount = 0
+      cell.stepResults = []
     })
 
     // update cell UI

@@ -6,6 +6,7 @@ import CellData from '../types/CellData'
 
 class Game {
   private _mapData: any = null
+  private _engine: Engine | null = null
 
   async init (): Promise<void> {
     console.log("I got in!")
@@ -17,7 +18,7 @@ class Game {
 
     this.initButtons()
 
-    const engine = new Engine(this._mapData.cells)
+    this._engine = new Engine(this._mapData.cells)
   }
 
   private async loadMap (level: number): Promise<any> {
@@ -82,6 +83,10 @@ class Game {
             // toggle mute icon by toggling "icon--mute" & "icon--unmute" classes
             elm.classList.toggle('icon--mute')
             elm.classList.toggle('icon--unmute')
+            break
+          case 'undo':
+            // undo the last step
+            this._engine?.undo()
             break
           case 'reset':
             // reset the game

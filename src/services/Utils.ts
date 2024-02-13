@@ -17,7 +17,7 @@ abstract class Utils {
   public static updateCellUi (allCellData: CellData[]) {
     // loop through allCellData; update cell UI for each cell
     allCellData.forEach(cell => {
-      const { id, isComplete, dir } = cell
+      const { id, completionCount } = cell
   
       // get cell element
       const cellElm = document.querySelector(`[data-cell-id="${id}"]`)
@@ -28,7 +28,7 @@ abstract class Utils {
       }
       
       // if cell is complete, add color to cell and remove arrow
-      if (isComplete) {
+      if (completionCount) {
         cellElm.classList.add('cell--complete')
         // cellElm.style.backgroundColor = COLORS[dir]
       } else {

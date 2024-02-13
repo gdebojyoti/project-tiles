@@ -4,9 +4,8 @@ import Utils from '../services/Utils'
 class Engine {
   private _currentlyOccupiedCell: string = ''
   private _allCellData: CellData[] = []
-  private _stepCount = 0
+  private _steps: string[] = [] // maintain the steps taken by the user, to support "undo"
   private _isInProgress = false
-
   private _tokenElm: HTMLElement | null = null
   
   constructor (allCellData: CellData[]) {
@@ -34,15 +33,19 @@ class Engine {
 
     // maintain state of all cells data
     this._allCellData = [...allCellData]
-    
+
+    this.addSceneListener()
+  }
+
+  // add click listener on scene (instead of all cells, to improve performance), and apply move logic
+  private addSceneListener (): void {
     // get scene element
     const sceneElm = document.getElementById('scene')
     if (!sceneElm) {
       console.error('Scene element not found')
       return
     }
-    
-    // add click listener on scene (instead of all cells, to improve performance), and apply move logic
+
     sceneElm.addEventListener('click', (e) => {
       // exit if game is not in progress
       if (!this._isInProgress) {
@@ -74,7 +77,10 @@ class Engine {
 
       this.updateCompletionStatus(currentCell, clickedCell)
 
-      // update step count
+      // add step to steps array
+      this._steps.push(this._currentlyOccupiedCell)
+
+      // update step count in UI
       this.updateStepCount()
 
       // update state of currently occupied cell
@@ -129,15 +135,16 @@ class Engine {
   
     const { dir } = clickedCell
     
-    // if move is same as `dir` of clicked cell, set current cell as complete
-    clickedCell.isComplete = direction === dir
+    // if move is same as `dir` of clicked cell, increment completion count; else reset it to 0
+    if (direction === dir) {
+      clickedCell.completionCount = clickedCell.completionCount ? clickedCell.completionCount + 1 : 1
+    } else {
+      clickedCell.completionCount = 0
+    }
   }
 
   // update the steps count in the UI
   private updateStepCount (): void {
-    // increment step count in the state
-    this._stepCount++
-
     // get step count element
     const stepCountElm = document.getElementById('step-counter')
 
@@ -147,11 +154,11 @@ class Engine {
     }
 
     // update step count in the UI
-    stepCountElm.textContent = `${this._stepCount}`
+    stepCountElm.textContent = `${this._steps.length}`
   }
 
   private checkGameCompletion (): void {
-    const isGameComplete = this._allCellData.every(({ isBase, isComplete }) => isBase || isComplete)
+    const isGameComplete = this._allCellData.every(({ isBase, completionCount }) => isBase || completionCount)
 
     if (isGameComplete) {
       // stop the game
@@ -161,8 +168,55 @@ class Engine {
       setTimeout(() => {
         // const successMessageElm = document.getElementById('success-message')
         // successMessageElm.classList.add('success-message--visible')
-        alert(`Congratulations! You completed the game in ${this._stepCount} steps.`)
+        alert(`Congratulations! You completed the game in ${this._steps.length} steps.`)
       }, 300)
+    }
+  }
+
+  // undo the last step
+  undo (): void {
+    // exit if game is not in progress
+    if (!this._isInProgress) {
+      return
+    }
+
+    // get last location of token
+    const lastLocationId = this._steps[this._steps.length - 1] // the last cell that the token was in
+    const lastCell = this._allCellData.find(cell => cell.id === lastLocationId)
+
+    // get details of current location of token
+    const currentCell = this._allCellData.find(cell => cell.id === this._currentlyOccupiedCell)
+
+    // handle edge case
+    if (!lastCell || !currentCell) {
+      console.error('Undo failed. Cells not found')
+      return
+    }
+
+    // check if the last move caused the cell's completion count to increase; if yes, reduce the completion count by 1
+    const lastMovedDirection = Utils.getDirection(lastCell, currentCell)
+    if (lastMovedDirection === currentCell.dir) {
+      currentCell.completionCount--
+
+      // update cell UI, if applicable
+      if (currentCell.completionCount === 0) {
+        Utils.updateCellUi(this._allCellData)
+      }
+    }
+
+    // update state of currently occupied cell
+    this._currentlyOccupiedCell = lastLocationId
+
+    // remove the last step from the steps array
+    this._steps.pop()
+
+    // update step count in UI
+    this.updateStepCount()
+
+    // move back the token to the last location
+    const lastCellElm = document.querySelector(`[data-cell-id="${lastLocationId}"]`)
+    if (lastCellElm) {
+      this.animateToken(lastCellElm)
     }
   }
 }

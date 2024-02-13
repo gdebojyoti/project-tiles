@@ -84,13 +84,14 @@ class Game {
             elm.classList.toggle('icon--mute')
             elm.classList.toggle('icon--unmute')
             break
+          case 'restart':
+            // restart the game
+            // this.initScene()
+            this._engine?.restart()
+            break
           case 'undo':
             // undo the last step
             this._engine?.undo()
-            break
-          case 'reset':
-            // reset the game
-            this.initScene()
             break
           default:
             console.log('icon clicked:', icon)

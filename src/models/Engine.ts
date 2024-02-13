@@ -219,6 +219,41 @@ class Engine {
       this.animateToken(lastCellElm)
     }
   }
+
+  // restart the game
+  restart (): void {
+    // get base cell
+    const baseCell = this._allCellData.find(cell => cell.isBase)
+
+    // handle edge case
+    if (!baseCell) {
+      console.error('Base cell not found')
+      return
+    }
+
+    // reset the steps array
+    this._steps = []
+
+    // update step count in UI
+    this.updateStepCount()
+
+    // reset the state of currently occupied cell
+    this._currentlyOccupiedCell = baseCell.id
+
+    // move token to base cell
+    this.moveTokenToBaseCell(baseCell)
+
+    // reset the completion count of all cells
+    this._allCellData.forEach(cell => {
+      cell.completionCount = 0
+    })
+
+    // update cell UI
+    Utils.updateCellUi(this._allCellData)
+
+    // reset the status of game
+    this._isInProgress = true
+  }
 }
 
 export default Engine

@@ -122,7 +122,7 @@ body {
   padding: 0 25px 25px;
 }
 .nav .icon {
-  margin-left: 50px;
+  margin-left: 35px;
 }
 .nav .icon:first-of-type {
   margin-left: 0;
@@ -137,6 +137,7 @@ body {
   cursor: pointer;
 }
 .icon--undo { background-image: url('../assets/icons/undo.png'); background-size: 33px; }
+.icon--restart { background-image: url('../assets/icons/restart.png'); }
 .icon--home { background-image: url('../assets/icons/home.png'); }
 .icon--settings { background-image: url('../assets/icons/settings.png'); }
 .icon--mute { background-image: url('../assets/icons/mute.png'); }

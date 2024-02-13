@@ -4,7 +4,7 @@ type CellData = {
   row: number
   isBase: boolean
   dir: string
-  isComplete: boolean
+  stepResults: boolean[] // maintain a record of the results of the steps taken by the user over this cell, to support "undo"
 }
 
 export default CellData

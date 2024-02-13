@@ -6,6 +6,7 @@ import CellData from '../types/CellData'
 
 class Game {
   private _mapData: any = null
+  private _engine: Engine | null = null
 
   async init (): Promise<void> {
     console.log("I got in!")
@@ -13,11 +14,11 @@ class Game {
     this._mapData = await this.loadMap(-1)
     console.log("mapData", this._mapData)
 
-    this.initScene()
+    this.initScene(true)
 
     this.initButtons()
 
-    const engine = new Engine(this._mapData.cells)
+    this._engine = new Engine(this._mapData.cells)
   }
 
   private async loadMap (level: number): Promise<any> {
@@ -29,7 +30,8 @@ class Game {
     return sampleMapData.default
   }
 
-  private initScene (): void {
+  // initialize scene; triggered during first start and game restarts
+  private initScene (isFirstStart: boolean): void {
     const { TILE_SIZE, TILE_GAP } = CONFIG
     const { positionCompensation, cells } = this._mapData
 
@@ -55,8 +57,10 @@ class Game {
     sceneElm.style.width = `${highestCol * (TILE_SIZE + TILE_GAP)}px`
     sceneElm.style.height = `${highestRow * (TILE_SIZE + TILE_GAP)}px`
 
-    // add position compensation to scene's transform property
-    sceneElm.style.transform = `${getComputedStyle(sceneElm).transform} translate(${positionCompensation.x}px, ${positionCompensation.y}px)`
+    // add position compensation to scene's transform property (first time only, and not during "restarts")
+    if (isFirstStart) {
+      sceneElm.style.transform = `${getComputedStyle(sceneElm).transform} translate(${positionCompensation.x}px, ${positionCompensation.y}px)`
+    }
 
     // empty scene element
     sceneElm.innerHTML = ''
@@ -83,9 +87,14 @@ class Game {
             elm.classList.toggle('icon--mute')
             elm.classList.toggle('icon--unmute')
             break
-          case 'reset':
-            // reset the game
-            this.initScene()
+          case 'restart':
+            // restart the game
+            this.initScene(false)
+            this._engine?.restart()
+            break
+          case 'undo':
+            // undo the last step
+            this._engine?.undo()
             break
           default:
             console.log('icon clicked:', icon)

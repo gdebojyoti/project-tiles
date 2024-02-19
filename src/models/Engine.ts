@@ -254,6 +254,29 @@ class Engine {
     // reset the status of game
     this._isInProgress = true
   }
+
+  // update position of token element, triggered by window resize, orientation change or any other event
+  updateTokenPosition (): void {
+    const currentCell = this._allCellData.find(cell => cell.id === this._currentlyOccupiedCell)
+    if (!currentCell) {
+      console.error('Cell not found')
+      return
+    }
+
+    const currentCellElm = document.querySelector(`[data-cell-id="${currentCell.id}"]`)
+    if (!currentCellElm) {
+      console.error('Cell element not found')
+      return
+    }
+
+    // disable animation for this update
+    this._tokenElm?.classList.add('token--skip-transition')
+
+    this.animateToken(currentCellElm)
+
+    // show token after the cells have finished rendering
+    this._tokenElm?.classList.remove('token--skip-transition')
+  }
 }
 
 export default Engine

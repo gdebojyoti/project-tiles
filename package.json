@@ -1,7 +1,7 @@
 {
   "name": "project-tiles",
-  "version": "0.1.0",
-  "description": "",
+  "version": "1.1.0",
+  "description": "Project Tiles is an immersive web-based game that offers a tranquil and engaging puzzle experience filled with vibrant colors",
   "main": "app.js",
   "scripts": {
     "tsc": "tsc --init",

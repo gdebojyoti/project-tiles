@@ -89,7 +89,6 @@ class Game {
             // toggle mute icon by toggling "icon--mute" & "icon--unmute" classes
             elm.classList.toggle('icon--mute')
             elm.classList.toggle('icon--unmute')
-            this._engine?.updateTokenPosition()
             break
           case 'restart':
             // restart the game
@@ -116,7 +115,16 @@ class Game {
       return
     }
 
-    panSurfaceElm.addEventListener('mousedown', (e) => {
+    const onTouchStart = (e: TouchEvent) => {
+      const touch = e.touches[0]
+      onPointerDown(touch)
+    }
+
+    const onMouseDown = (e: MouseEvent) => {
+      onPointerDown(e)
+    }
+
+    const onPointerDown = (e: MouseEvent | Touch) => {
       const sceneContainerElm = document.getElementById('scene-container')
       if (!sceneContainerElm) {
         console.error('Scene container element not found')
@@ -129,7 +137,15 @@ class Game {
       let movedX = 0
       let movedY = 0
 
+      const onTouchMove = (e: TouchEvent) => {
+        onPointerMove(e.touches[0])
+      }
+
       const onMouseMove = (e: MouseEvent) => {
+        onPointerMove(e)
+      }
+
+      const onPointerMove = (e: MouseEvent | Touch) => {
         movedX = e.clientX - initialX
         movedY = e.clientY - initialY
 
@@ -140,17 +156,24 @@ class Game {
       }
 
       // remove event listeners on mouse up, and update local scene transform variable
-      const onMouseUp = () => {
+      const onPointerUp = () => {
         this._sceneTransform.x += movedX
         this._sceneTransform.y += movedY
 
         document.removeEventListener('mousemove', onMouseMove)
-        document.removeEventListener('mouseup', onMouseUp)
+        document.removeEventListener('mouseup', onPointerUp)
+        document.removeEventListener('touchmove', onTouchMove)
+        document.removeEventListener('touchend', onPointerUp)
       }
 
       document.addEventListener('mousemove', onMouseMove)
-      document.addEventListener('mouseup', onMouseUp)
-    })
+      document.addEventListener('mouseup', onPointerUp)
+      document.addEventListener('touchmove', onTouchMove)
+      document.addEventListener('touchend', onPointerUp)
+    }
+
+    panSurfaceElm.addEventListener('mousedown', onMouseDown)
+    panSurfaceElm.addEventListener('touchstart', onTouchStart)
   }
 }
 

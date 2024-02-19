@@ -6,7 +6,8 @@ import greenArrow from '../assets/green.png'
 // configuration values for the game
 export const CONFIG = {
   TILE_SIZE: 50,
-  TILE_GAP: 10
+  TILE_GAP: 10,
+  LEVEL_COUNT: 3
 }
 
 // directions

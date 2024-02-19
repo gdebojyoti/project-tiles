@@ -7,9 +7,13 @@ class Engine {
   private _steps: string[] = [] // maintain the steps taken by the user, to support "undo"
   private _isInProgress = false
   private _tokenElm: HTMLElement | null = null
+
+  private __game: any // reference to the parent game object; NOTE: this is not a good practice, but it's a quick fix for now
   
-  constructor (allCellData: CellData[]) {
+  constructor (game: any, allCellData: CellData[]) {
     console.log("allCellData", allCellData)
+
+    this.__game = game
 
     // start the game
     this._isInProgress = true
@@ -173,7 +177,10 @@ class Engine {
       setTimeout(() => {
         // const successMessageElm = document.getElementById('success-message')
         // successMessageElm.classList.add('success-message--visible')
-        alert(`Congratulations! You completed the game in ${this._steps.length} steps.`)
+        // alert(`Congratulations! You completed the game in ${this._steps.length} steps.`)
+
+        // start next level
+        this.__game?.checkAndLoadNextLevel()
       }, 300)
     }
   }

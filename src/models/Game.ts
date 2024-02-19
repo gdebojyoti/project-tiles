@@ -5,32 +5,50 @@ import Engine from './Engine'
 import CellData from '../types/CellData'
 
 class Game {
+  private _currentLevel: number = 1
   private _mapData: any = null
   private _engine: Engine | null = null
   private _sceneTransform: { x: number, y: number } = { x: 0, y: 0 }
 
   async init (): Promise<void> {
     console.log("I got in!")
+    
+    try {
+      // load the first map
+      await this.loadMap(this._currentLevel)
+      console.log("mapData", this._mapData)
 
-    this._mapData = await this.loadMap(-1)
-    console.log("mapData", this._mapData)
+      this.initScene(true)
 
-    this.initScene(true)
+      this.initButtons()
 
-    this.initButtons()
+      this.initPanEvent()
 
-    this.initPanEvent()
-
-    this._engine = new Engine(this._mapData.cells)
+      this._engine = new Engine(this, this._mapData.cells)
+    } catch (error) {
+      console.error('Error loading map:', error)
+    }
   }
 
-  private async loadMap (level: number): Promise<any> {
+  private async loadMap (level: number): Promise<void> {
     console.log("level", level)
 
     // sample map data for the game
-    const sampleMapData = await import('../data/maps/sample-1.json')
+    let mapData = null
 
-    return sampleMapData.default
+    switch (level) {
+      case 1:
+        mapData = await import('../data/maps/level-1.json')
+        break
+      case 2:
+        mapData = await import('../data/maps/level-2.json')
+        break
+      case 3:
+        mapData = await import('../data/maps/level-3.json')
+        break
+    }
+
+    this._mapData = mapData?.default
   }
 
   // initialize scene; triggered during first start and game restarts
@@ -174,6 +192,25 @@ class Game {
 
     panSurfaceElm.addEventListener('mousedown', onMouseDown)
     panSurfaceElm.addEventListener('touchstart', onTouchStart)
+  }
+
+  // check & load next level
+  async checkAndLoadNextLevel (): Promise<void> {
+    // check if there's a next level to load
+    if (this._currentLevel < CONFIG.LEVEL_COUNT) {
+      this._currentLevel++ // increment current level
+      
+      await this.loadMap(this._currentLevel) // load next map
+      
+      this.initScene(false) // re-initialize scene
+      
+      // start the game
+      this._engine = new Engine(this, this._mapData.cells)
+      this._engine?.restart() // resets UI
+    } else {
+      console.log('No more levels to load')
+      alert(`Congratulations! You completed all the levels!`)
+    }
   }
 }
 

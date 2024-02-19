@@ -25,7 +25,7 @@ class Game {
     console.log("level", level)
 
     // sample map data for the game
-    const sampleMapData = await import('../data/sample.json')
+    const sampleMapData = await import('../data/maps/sample-1.json')
 
     return sampleMapData.default
   }

@@ -1,0 +1,38 @@
+{
+  "positionCompensation": {
+    "x": 0,
+    "y": 0
+  },
+  "cells": [
+    {
+      "isBase": true,
+      "id": "-1",
+      "col": 1,
+      "row": 1
+    },
+    {
+      "id": "1",
+      "col": 1,
+      "row": 2,
+      "dir": "UP"
+    },
+    {
+      "id": "2",
+      "col": 1,
+      "row": 3,
+      "dir": "DOWN"
+    },
+    {
+      "id": "3",
+      "col": 1,
+      "row": 4,
+      "dir": "UP"
+    },
+    {
+      "id": "4",
+      "col": 2,
+      "row": 3,
+      "dir": "RIGHT"
+    }
+  ]
+}

@@ -7,6 +7,7 @@ import CellData from '../types/CellData'
 class Game {
   private _mapData: any = null
   private _engine: Engine | null = null
+  private _sceneTransform: { x: number, y: number } = { x: 0, y: 0 }
 
   async init (): Promise<void> {
     console.log("I got in!")
@@ -17,6 +18,8 @@ class Game {
     this.initScene(true)
 
     this.initButtons()
+
+    this.initPanEvent()
 
     this._engine = new Engine(this._mapData.cells)
   }
@@ -86,6 +89,7 @@ class Game {
             // toggle mute icon by toggling "icon--mute" & "icon--unmute" classes
             elm.classList.toggle('icon--mute')
             elm.classList.toggle('icon--unmute')
+            this._engine?.updateTokenPosition()
             break
           case 'restart':
             // restart the game
@@ -100,6 +104,52 @@ class Game {
             console.log('icon clicked:', icon)
         }
       })
+    })
+  }
+
+  // add support for panning the "scene-container"
+  private initPanEvent (): void {
+    // identify element with "pan-surface" ID
+    const panSurfaceElm = document.getElementById('pan-surface')
+    if (!panSurfaceElm) {
+      console.error('Pan surface element not found')
+      return
+    }
+
+    panSurfaceElm.addEventListener('mousedown', (e) => {
+      const sceneContainerElm = document.getElementById('scene-container')
+      if (!sceneContainerElm) {
+        console.error('Scene container element not found')
+        return
+      }
+
+      const initialX = e.clientX
+      const initialY = e.clientY
+
+      let movedX = 0
+      let movedY = 0
+
+      const onMouseMove = (e: MouseEvent) => {
+        movedX = e.clientX - initialX
+        movedY = e.clientY - initialY
+
+        sceneContainerElm.style.transform = `translate(${this._sceneTransform.x + movedX}px, ${this._sceneTransform.y + movedY}px)`
+
+        // update token position
+        this._engine?.updateTokenPosition()
+      }
+
+      // remove event listeners on mouse up, and update local scene transform variable
+      const onMouseUp = () => {
+        this._sceneTransform.x += movedX
+        this._sceneTransform.y += movedY
+
+        document.removeEventListener('mousemove', onMouseMove)
+        document.removeEventListener('mouseup', onMouseUp)
+      }
+
+      document.addEventListener('mousemove', onMouseMove)
+      document.addEventListener('mouseup', onMouseUp)
     })
   }
 }

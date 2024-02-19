@@ -7,7 +7,7 @@
 
 - [X] Basic game
 - [x] Panning scene
-- [ ] Connect multiple maps
+- [ ] Connect multiple puzzles
 - [ ] Tutorial
 - [ ] Home screen & Menu
 - [ ] Scores

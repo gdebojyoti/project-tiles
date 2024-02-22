@@ -34,5 +34,6 @@
       "row": 3,
       "dir": "RIGHT"
     }
-  ]
+  ],
+  "optimum": 5
 }

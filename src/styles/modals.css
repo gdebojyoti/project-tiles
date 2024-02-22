@@ -1,0 +1,109 @@
+.modal {
+  /* display: flex; */
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.54);
+  text-transform: none;
+}
+.modal--visible {
+  display: flex;
+}
+
+.modal__inner {
+  width: calc(100% - 60px);
+  /* max-width: 500px; */
+  max-height: 90%;
+  border-radius: 10px;
+  opacity: 0;
+  animation: fadeInAndUp .2s ease-in-out .2s forwards;
+}
+@keyframes fadeInAndUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal__header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  font-size: 20px;
+  border-radius: 10px 10px 0 0;
+  background-color: var(--wet-asphalt);
+}
+
+.modal__body {
+  display: flex;
+  flex-direction: column;
+  padding-block: 45px;
+  color: var(--wet-asphalt);
+  font-size: 18px;
+  background-color: #fff;
+}
+
+.modal__stars {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  height: 50px;
+}
+
+.modal__star {
+  width: 50px;
+  height: 50px;
+  background: url('../assets/misc/star.png') center / contain no-repeat;
+}
+
+.modal__score {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.modal__footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0 0 10px 10px;
+}
+
+.modal__button {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 50px;
+  padding-bottom: 10px;
+  height: 70px;
+  border: none;
+  color: var(--base-light-color);
+  font-size: 12px;
+  background: var(--wet-asphalt) center top 10px / 30px no-repeat;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.modal__button:first-of-type {
+  border-bottom-left-radius: 10px;
+}
+.modal__button:last-of-type {
+  border-bottom-right-radius: 10px;
+}
+.modal__button--restart { background-image: url('../assets/icons/restart.png'); }
+.modal__button--home { background-image: url('../assets/icons/home.png'); }
+.modal__button--next { background-image: url('../assets/misc/play.png'); }
+
+.modal__button--primary {
+  background-color: var(--midnight-blue);
+}
+
+.modal--success .modal__inner {
+  max-width: 300px;
+}

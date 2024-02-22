@@ -25,3 +25,10 @@ export const IMAGE_PATHS = {
   [DIR.UP]: yellowArrow,
   [DIR.DOWN]: greenArrow
 }
+
+// success modal titles
+export const SUCCESS_TITLES = [
+  'Good job!', // for 1 star
+  'Well done!', // for 2 stars
+  'Excellent!' // for 3 stars
+]

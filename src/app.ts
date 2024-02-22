@@ -1,4 +1,5 @@
 import './styles/main.css'
+import './styles/modals.css'
 
 import Game from './models/Game'
 

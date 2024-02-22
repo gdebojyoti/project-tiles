@@ -1,6 +1,7 @@
 import { CONFIG } from '../data/constants'
 import Cell from './Cell'
 import Engine from './Engine'
+import UiService from '../services/Ui'
 
 import CellData from '../types/CellData'
 
@@ -25,6 +26,9 @@ class Game {
       this.initPanEvent()
 
       this._engine = new Engine(this, this._mapData.cells)
+
+      // initialize the UI
+      UiService.init({ onRestart: this.restart.bind(this), onNextLevel: this.checkAndLoadNextLevel.bind(this)})
     } catch (error) {
       console.error('Error loading map:', error)
     }
@@ -110,8 +114,7 @@ class Game {
             break
           case 'restart':
             // restart the game
-            this.initScene(false)
-            this._engine?.restart()
+            this.restart()
             break
           case 'undo':
             // undo the last step
@@ -192,6 +195,38 @@ class Game {
 
     panSurfaceElm.addEventListener('mousedown', onMouseDown)
     panSurfaceElm.addEventListener('touchstart', onTouchStart)
+  }
+
+  restart (): void {
+    this.initScene(false)
+    this._engine?.restart()
+  }
+
+  onLevelComplete (): void {
+    // get steps
+    const userStepCount = this._engine?.stepsCount || 0
+
+    // get optimum steps
+    const optimumStepCount = this._mapData.optimum
+
+    // calculate score
+    const score = Math.floor((optimumStepCount / userStepCount) * 100 * optimumStepCount)
+    console.log("score", score)
+
+    let starCount = 1 // default to 1 star
+
+    // 2 stars if user steps are within 20% of optimum steps
+    if (userStepCount < optimumStepCount * 1.2) {
+      starCount = 2
+    }
+    
+    // 3 stars if user steps are same as optimum steps
+    if (userStepCount === optimumStepCount) {
+      starCount = 3
+    }
+
+    // show success modal
+    UiService.showSuccessModal({ score, starCount })
   }
 
   // check & load next level

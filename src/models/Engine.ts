@@ -179,8 +179,8 @@ class Engine {
         // successMessageElm.classList.add('success-message--visible')
         // alert(`Congratulations! You completed the game in ${this._steps.length} steps.`)
 
-        // start next level
-        this.__game?.checkAndLoadNextLevel()
+        // trigger onLevelComplete method of the parent game object
+        this.__game?.onLevelComplete()
       }, 300)
     }
   }
@@ -283,6 +283,11 @@ class Engine {
 
     // show token after the cells have finished rendering
     this._tokenElm?.classList.remove('token--skip-transition')
+  }
+
+  // get steps count
+  get stepsCount (): number {
+    return this._steps.length
   }
 }
 

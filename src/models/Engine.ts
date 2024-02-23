@@ -173,13 +173,8 @@ class Engine {
       // stop the game
       this._isInProgress = false
 
-      // show success message
+      // trigger onLevelComplete method of the parent game object after a delay
       setTimeout(() => {
-        // const successMessageElm = document.getElementById('success-message')
-        // successMessageElm.classList.add('success-message--visible')
-        // alert(`Congratulations! You completed the game in ${this._steps.length} steps.`)
-
-        // trigger onLevelComplete method of the parent game object
         this.__game?.onLevelComplete()
       }, 300)
     }

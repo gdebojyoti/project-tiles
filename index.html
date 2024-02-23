@@ -38,5 +38,28 @@
         <span data-icon="settings" class="icon icon--settings icon--disabled">Settings</span>
       </nav>
     </div>
+
+    <div id="success-modal" class="modal modal--success">
+      <div class="modal__inner">
+        <h2 id="success-modal-header" class="modal__header">{title}</h2>
+        <div class="modal__body">
+          <div id="success-stars" class="modal__stars">
+            <!-- <div class="modal__star"></div>
+            <div class="modal__star"></div>
+            <div class="modal__star"></div> -->
+          </div>
+
+          <div class="modal__score">
+            Your score:
+            <strong id="modal-score" class="modal__score-value">{score}</strong>
+          </div>
+        </div>
+        <div class="modal__footer" id="modal-button-set">
+          <button id="modal-retry" class="modal__button modal__button--restart" data-modal-icon="retry">Retry</button>
+          <!-- <button id="modal-home" class="modal__button modal__button--home" data-modal-icon="home">Home</button> -->
+          <button id="modal-next" class="modal__button modal__button--next modal__button--primary" data-modal-icon="next">Next</button>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

@@ -7,9 +7,13 @@ class Engine {
   private _steps: string[] = [] // maintain the steps taken by the user, to support "undo"
   private _isInProgress = false
   private _tokenElm: HTMLElement | null = null
+
+  private __game: any // reference to the parent game object; NOTE: this is not a good practice, but it's a quick fix for now
   
-  constructor (allCellData: CellData[]) {
+  constructor (game: any, allCellData: CellData[]) {
     console.log("allCellData", allCellData)
+
+    this.__game = game
 
     // start the game
     this._isInProgress = true
@@ -169,11 +173,9 @@ class Engine {
       // stop the game
       this._isInProgress = false
 
-      // show success message
+      // trigger onLevelComplete method of the parent game object after a delay
       setTimeout(() => {
-        // const successMessageElm = document.getElementById('success-message')
-        // successMessageElm.classList.add('success-message--visible')
-        alert(`Congratulations! You completed the game in ${this._steps.length} steps.`)
+        this.__game?.onLevelComplete()
       }, 300)
     }
   }
@@ -276,6 +278,11 @@ class Engine {
 
     // show token after the cells have finished rendering
     this._tokenElm?.classList.remove('token--skip-transition')
+  }
+
+  // get steps count
+  get stepsCount (): number {
+    return this._steps.length
   }
 }
 

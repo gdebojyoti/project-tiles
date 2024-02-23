@@ -1,7 +1,7 @@
 {
   "positionCompensation": {
-    "x": 0,
-    "y": -30
+    "x": 40,
+    "y": -50
   },
   "cells": [
     {
@@ -20,6 +20,18 @@
       "id": "delta-2",
       "col": 1,
       "row": 3,
+      "dir": "UP"
+    },
+    {
+      "id": "delta-3",
+      "col": 1,
+      "row": 6,
+      "dir": "UP"
+    },
+    {
+      "id": "delta-4",
+      "col": 1,
+      "row": 7,
       "dir": "UP"
     },
     {

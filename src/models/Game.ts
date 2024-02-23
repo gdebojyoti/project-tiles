@@ -1,36 +1,58 @@
 import { CONFIG } from '../data/constants'
 import Cell from './Cell'
 import Engine from './Engine'
+import UiService from '../services/Ui'
 
 import CellData from '../types/CellData'
 
 class Game {
+  private _currentLevel: number = 1
   private _mapData: any = null
   private _engine: Engine | null = null
   private _sceneTransform: { x: number, y: number } = { x: 0, y: 0 }
 
   async init (): Promise<void> {
     console.log("I got in!")
+    
+    try {
+      // load the first map
+      await this.loadMap(this._currentLevel)
+      console.log("mapData", this._mapData)
 
-    this._mapData = await this.loadMap(-1)
-    console.log("mapData", this._mapData)
+      this.initScene(true)
 
-    this.initScene(true)
+      this.initButtons()
 
-    this.initButtons()
+      this.initPanEvent()
 
-    this.initPanEvent()
+      this._engine = new Engine(this, this._mapData.cells)
 
-    this._engine = new Engine(this._mapData.cells)
+      // initialize the UI
+      UiService.init({ onRestart: this.restart.bind(this), onNextLevel: this.checkAndLoadNextLevel.bind(this)})
+    } catch (error) {
+      console.error('Error loading map:', error)
+    }
   }
 
-  private async loadMap (level: number): Promise<any> {
+  private async loadMap (level: number): Promise<void> {
     console.log("level", level)
 
     // sample map data for the game
-    const sampleMapData = await import('../data/maps/sample-1.json')
+    let mapData = null
 
-    return sampleMapData.default
+    switch (level) {
+      case 1:
+        mapData = await import('../data/maps/level-1.json')
+        break
+      case 2:
+        mapData = await import('../data/maps/level-2.json')
+        break
+      case 3:
+        mapData = await import('../data/maps/level-3.json')
+        break
+    }
+
+    this._mapData = mapData?.default
   }
 
   // initialize scene; triggered during first start and game restarts
@@ -92,8 +114,7 @@ class Game {
             break
           case 'restart':
             // restart the game
-            this.initScene(false)
-            this._engine?.restart()
+            this.restart()
             break
           case 'undo':
             // undo the last step
@@ -174,6 +195,57 @@ class Game {
 
     panSurfaceElm.addEventListener('mousedown', onMouseDown)
     panSurfaceElm.addEventListener('touchstart', onTouchStart)
+  }
+
+  restart (): void {
+    this.initScene(false)
+    this._engine?.restart()
+  }
+
+  onLevelComplete (): void {
+    // get steps
+    const userStepCount = this._engine?.stepsCount || 0
+
+    // get optimum steps
+    const optimumStepCount = this._mapData.optimum
+
+    // calculate score
+    const score = Math.floor((optimumStepCount / userStepCount) * 100 * optimumStepCount)
+    console.log("score", score)
+
+    let starCount = 1 // default to 1 star
+
+    // 2 stars if user steps are within 20% of optimum steps
+    if (userStepCount < optimumStepCount * 1.2) {
+      starCount = 2
+    }
+    
+    // 3 stars if user steps are same as optimum steps
+    if (userStepCount === optimumStepCount) {
+      starCount = 3
+    }
+
+    // show success modal
+    UiService.showSuccessModal({ score, starCount })
+  }
+
+  // check & load next level
+  async checkAndLoadNextLevel (): Promise<void> {
+    // check if there's a next level to load
+    if (this._currentLevel < CONFIG.LEVEL_COUNT) {
+      this._currentLevel++ // increment current level
+      
+      await this.loadMap(this._currentLevel) // load next map
+      
+      this.initScene(false) // re-initialize scene
+      
+      // start the game
+      this._engine = new Engine(this, this._mapData.cells)
+      this._engine?.restart() // resets UI
+    } else {
+      console.log('No more levels to load')
+      alert(`Congratulations! You completed all the levels!`)
+    }
   }
 }
 

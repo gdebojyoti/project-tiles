@@ -7,11 +7,12 @@
 
 - [X] Basic game
 - [x] Panning scene
-- [ ] Connect multiple maps
+- [x] Connect multiple puzzles
 - [ ] Tutorial
 - [ ] Home screen & Menu
 - [ ] Scores
 - [ ] Settings: Themes & Music
 - [ ] User accounts
 - [ ] Leaderboards
+- [ ] User generated puzzles
 - [ ] Zoom scene

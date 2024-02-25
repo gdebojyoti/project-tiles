@@ -201,7 +201,7 @@ class Engine {
     }
 
     // remove the last step result from current cell
-    currentCell.stepResults.pop()
+    currentCell.stepResults?.pop()
 
     // update cell UI
     Utils.updateCellUi(this._allCellData)

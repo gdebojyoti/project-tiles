@@ -173,14 +173,14 @@ body {
   left: 20px;
   width: 30px;
   height: 30px;
-  opacity: 0;
+  /* opacity: 0; */ /* hidden by default via inline style */
   background: url('../assets/tokens/token-1.png') center center / contain no-repeat;
   border-radius: 50%;
   transition: all .2s;
   pointer-events: none;
 }
 .token--visible {
-  opacity: 1;
+  opacity: 1 !important; /* important added to override the inline style */
 }
 .token--skip-transition {
   transition: none;

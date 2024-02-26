@@ -9,7 +9,7 @@ class UiEngine implements Observer {
   private _gameEngine: GameEngine
   private _sceneTransform: { x: number, y: number } = { x: 0, y: 0 }
 
-  private _sceneElm: HTMLElement
+  private _sceneElm!: HTMLElement
   private _tokenElm!: HTMLElement
 
   constructor () {
@@ -28,14 +28,27 @@ class UiEngine implements Observer {
       case 'INIT_SCENE':
         // Call the initScene method with the data passed from the Game class
         this.initScene(data)
-        this.addSceneListener()
         if (isFirstStart) {
+          this.addSceneListener()
           this.initButtons()
           this.initPanEvent()
         }
         break
+
+      case 'RESET_TOKEN_POSITION':
+        this.moveTokenToBaseCell(data.baseCell)
+        break
+
       case 'UPDATE_TOKEN':
         this.updateTokenPosition(data)
+        break
+      
+      case 'UPDATE_STEP_COUNT':
+        this.updateStepCount(data.stepCount)
+        break
+
+      case 'UPDATE_ALL_CELLS':
+        this.updateAllCells(data.allCellData)
         break
     }
   }
@@ -46,9 +59,12 @@ class UiEngine implements Observer {
     const { positionCompensation, cells } = mapData
 
     // get scene element
-    const sceneElm = document.getElementById('scene')
+    this._sceneElm = document.getElementById('scene') as HTMLElement
 
-    if (sceneElm === null) {
+    // get token element
+    this._tokenElm = document.getElementById('token') as HTMLElement
+
+    if (this._sceneElm === null) {
       console.error('Scene element not found')
       return
     }
@@ -64,81 +80,41 @@ class UiEngine implements Observer {
     }, 0)
 
     // set scene width & height
-    sceneElm.style.width = `${highestCol * (TILE_SIZE + TILE_GAP)}px`
-    sceneElm.style.height = `${highestRow * (TILE_SIZE + TILE_GAP)}px`
+    this._sceneElm.style.width = `${highestCol * (TILE_SIZE + TILE_GAP)}px`
+    this._sceneElm.style.height = `${highestRow * (TILE_SIZE + TILE_GAP)}px`
 
     // add position compensation to scene's transform property (first time only, and not during "restarts")
     if (isFirstStart) {
-      sceneElm.style.transform = `${getComputedStyle(sceneElm).transform} translate(${positionCompensation.x}px, ${positionCompensation.y}px)`
+      this._sceneElm.style.transform = `${getComputedStyle(this._sceneElm).transform} translate(${positionCompensation.x}px, ${positionCompensation.y}px)`
     }
 
     // empty scene element
-    sceneElm.innerHTML = ''
+    this._sceneElm.innerHTML = ''
 
     // loop through cells data; create & add cells to scene
     cells.forEach((data: CellData) => {
       const cellElm = new Cell(data, highestRow)
-      sceneElm.appendChild(cellElm.element)
+      this._sceneElm.appendChild(cellElm.element)
     })
   }
 
   // add click listener on scene (instead of all cells, to improve performance), and apply move logic
   private addSceneListener (): void {
-    // get scene element
-    const sceneElm = document.getElementById('scene')
-    if (!sceneElm) {
+    // exit if scene element is not found
+    if (!this._sceneElm) {
       console.error('Scene element not found')
       return
     }
 
-    sceneElm.addEventListener('click', (e) => {
-      // exit if game is not in progress
-      if (!this._isInProgress) {
-        return
-      }
-
+    this._sceneElm.addEventListener('click', (e) => {
       const clickedCellElm = (e.target as Element).closest('.cell')
       if (!clickedCellElm) {
         return
       }
 
       const clickedCellId = clickedCellElm.getAttribute('data-cell-id')
-      
-      // get current & clicked cells data
-      const currentCell = this._allCellData.find(({ id }) => id === this._currentlyOccupiedCell)
-      const clickedCell = this._allCellData.find(({ id }) => id === clickedCellId)
 
-      // exit if either cell is not found
-      if (!currentCell || !clickedCell) {
-        console.error('Cell not found')
-        return
-      }
-
-      // if clicked cell is not adjacent to current cell, exit
-      if (!Utils.isAdjacent(currentCell, clickedCell)) {
-        console.warn('Not adjacent')
-        return
-      }
-
-      this.updateCompletionStatus(currentCell, clickedCell)
-
-      // add step to steps array
-      this._steps.push(this._currentlyOccupiedCell)
-
-      // update step count in UI
-      this.updateStepCount()
-
-      // update state of currently occupied cell
-      this._currentlyOccupiedCell = clickedCell.id
-
-      // move to token to clicked cell
-      this.animateToken(clickedCellElm)
-
-      // update cell UI
-      Utils.updateCellUi(this._allCellData)
-
-      // check game completion
-      this.checkGameCompletion()
+      this._gameEngine.onTileClick(clickedCellId)
     })
   }
 
@@ -159,11 +135,11 @@ class UiEngine implements Observer {
             break
           case 'restart':
             // restart the game
-            // this._gameEngine.restart()
+            this._gameEngine.restart()
             break
           case 'undo':
             // undo the last step
-            // this._gameEngine.undo()
+            this._gameEngine.undo()
             break
           default:
             console.log('icon clicked:', icon)
@@ -242,6 +218,26 @@ class UiEngine implements Observer {
     panSurfaceElm.addEventListener('touchstart', onTouchStart)
   }
 
+  private moveTokenToBaseCell (baseCell: CellData): void {
+    // get base cell element
+    const baseCellElm = document.querySelector(`[data-cell-id="${baseCell.id}"]`)
+
+    if (!baseCellElm) {
+      console.error('Base cell element not found')
+      return
+    }
+    
+    this.animateTokenTo(baseCellElm)
+
+    // show token after the cells have finished rendering
+    setTimeout(() => {
+      if (!this._tokenElm) {
+        return
+      }
+      this._tokenElm.classList.add('token--visible')
+    }, 750)
+  }
+
   // update position of token element, triggered by window resize, orientation change or any other event
   private updateTokenPosition ({ cellId }: { cellId: string }): void {
     const currentCellElm = document.querySelector(`[data-cell-id="${cellId}"]`)
@@ -269,6 +265,47 @@ class UiEngine implements Observer {
       // return
     }
     this._tokenElm.style.transform = `translate(${left}px, ${top}px)`
+  }
+
+  // update the steps count in the UI
+  private updateStepCount (stepCount: number): void {
+    // get step count element
+    const stepCountElm = document.getElementById('step-counter')
+
+    if (!stepCountElm) {
+      console.error('Step count element not found')
+      return
+    }
+
+    // update step count in the UI
+    stepCountElm.textContent = `${stepCount}`
+  }
+
+  private updateAllCells (allCellData: CellData[]) {
+    // loop through allCellData; update cell UI for each cell
+    allCellData.forEach(cell => {
+      const { id, stepResults } = cell
+  
+      // get cell element
+      const cellElm = document.querySelector(`[data-cell-id="${id}"]`)
+
+      if (!cellElm) {
+        console.error('Cell element not found')
+        return
+      }
+
+      // cell is complete if the last step is true
+      const isCellComplete = stepResults ? stepResults[stepResults.length - 1] : false
+      
+      // if cell is complete, add color to cell and remove arrow
+      if (isCellComplete) {
+        cellElm.classList.add('cell--complete')
+        // cellElm.style.backgroundColor = COLORS[dir]
+      } else {
+        // if cell is incomplete, remove color from cell and add arrow
+        cellElm.classList.remove('cell--complete')
+      }
+    })
   }
 }
 

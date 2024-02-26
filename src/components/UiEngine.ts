@@ -12,8 +12,8 @@ class UiEngine implements Observer {
   private _sceneElm!: HTMLElement
   private _tokenElm!: HTMLElement
 
-  constructor () {
-    this._gameEngine = new GameEngine()
+  constructor (game: GameEngine) {
+    this._gameEngine = game
     
     // Add the Ui instance to the observers array
     this._gameEngine.addObserver(this)

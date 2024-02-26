@@ -1,3 +1,4 @@
+import { CONFIG } from '../data/constants'
 import CellData from '../types/CellData'
 import Observer from '../interfaces/Observer'
 import Utils from '../services/Utils'
@@ -29,6 +30,7 @@ class GameEngine {
 
   // NOTE: public methods
 
+  // TODO: Remove the overlapping logic with `restart` method
   startGame (): void {
     // start the game
     this._isInProgress = true
@@ -136,6 +138,7 @@ class GameEngine {
     // update cell UI
     // TODO: I'm currently calling INIT_SCENE instead of UPDATE_ALL_CELLS just to trigger the animation during "cell / tile initialization"; this should be fixed
     this.notifyObservers('INIT_SCENE', {
+      isFirstStart: false,
       mapData: this._mapData
     })
     // this.notifyObservers('UPDATE_ALL_CELLS', {
@@ -189,6 +192,28 @@ class GameEngine {
     this.notifyObservers('UPDATE_TOKEN', {
       cellId: lastLocationId
     })
+  }
+
+  // check & load next level
+  async checkAndLoadNextLevel (): Promise<void> {
+    // check if there's a next level to load
+    if (this._currentLevel < CONFIG.LEVEL_COUNT) {
+      this._currentLevel++ // increment current level
+      
+      await this.loadMap(this._currentLevel) // load next map
+      
+      // re-initialize scene
+      this.notifyObservers('INIT_SCENE', {
+        isFirstStart: false,
+        mapData: this._mapData
+      })
+
+      // TODO: fix `startGame` & `restart` methods; calling `restart` here is a workaround
+      this.restart()
+    } else {
+      console.log('No more levels to load')
+      alert(`Congratulations! You completed all the levels!`)
+    }
   }
 
   // NOTE: private methods
@@ -279,8 +304,10 @@ class GameEngine {
     }
 
     // show success modal
-    alert("level complete!")
-    // UiService.showSuccessModal({ score, starCount })
+    this.notifyObservers('SHOW_SUCCESS_MODAL', {
+      score,
+      starCount
+    })
   }
 
   // NOTE: observer pattern implementation

@@ -19,7 +19,7 @@ class GameEngine {
     // load map
     await this.loadMap(this._currentLevel)
 
-    this._notifyObservers('INIT_SCENE', {
+    this.notifyObservers('INIT_SCENE', {
       isFirstStart: true,
       mapData: this._mapData
     })
@@ -45,7 +45,7 @@ class GameEngine {
     this._currentlyOccupiedCell = baseCell.id
 
     // update token position to base cell
-    this._notifyObservers('RESET_TOKEN_POSITION', {
+    this.notifyObservers('RESET_TOKEN_POSITION', {
       baseCell
     })
   }
@@ -73,13 +73,13 @@ class GameEngine {
       return
     }
 
-    this._updateCompletionStatus(currentCell, clickedCell)
+    this.updateCompletionStatus(currentCell, clickedCell)
 
     // add step to steps array
     this._steps.push(this._currentlyOccupiedCell)
 
     // update step count in UI (via message)
-    this._notifyObservers('UPDATE_STEP_COUNT', {
+    this.notifyObservers('UPDATE_STEP_COUNT', {
       stepCount: this._steps.length
     })
 
@@ -89,7 +89,7 @@ class GameEngine {
     this.updateTokenPosition()
 
     // update cell UI
-    this._notifyObservers('UPDATE_ALL_CELLS', {
+    this.notifyObservers('UPDATE_ALL_CELLS', {
       allCellData: this._allCellData
     })
 
@@ -98,7 +98,7 @@ class GameEngine {
   }
 
   updateTokenPosition (): void {
-    this._notifyObservers('UPDATE_TOKEN', {
+    this.notifyObservers('UPDATE_TOKEN', {
       cellId: this._currentlyOccupiedCell
     })
   }
@@ -118,7 +118,7 @@ class GameEngine {
     this._steps = []
 
     // update step count in UI
-    this._notifyObservers('UPDATE_STEP_COUNT', {
+    this.notifyObservers('UPDATE_STEP_COUNT', {
       stepCount: this._steps.length
     })
 
@@ -135,10 +135,10 @@ class GameEngine {
 
     // update cell UI
     // TODO: I'm currently calling INIT_SCENE instead of UPDATE_ALL_CELLS just to trigger the animation during "cell / tile initialization"; this should be fixed
-    this._notifyObservers('INIT_SCENE', {
+    this.notifyObservers('INIT_SCENE', {
       mapData: this._mapData
     })
-    // this._notifyObservers('UPDATE_ALL_CELLS', {
+    // this.notifyObservers('UPDATE_ALL_CELLS', {
     //   allCellData: this._allCellData
     // })
 
@@ -170,7 +170,7 @@ class GameEngine {
     currentCell.stepResults.pop()
 
     // update cell UI
-    this._notifyObservers('UPDATE_ALL_CELLS', {
+    this.notifyObservers('UPDATE_ALL_CELLS', {
       allCellData: this._allCellData
     })
 
@@ -181,12 +181,12 @@ class GameEngine {
     this._steps.pop()
 
     // update step count in UI
-    this._notifyObservers('UPDATE_STEP_COUNT', {
+    this.notifyObservers('UPDATE_STEP_COUNT', {
       stepCount: this._steps.length
     })
 
     // update token UI to move it back to the last location
-    this._notifyObservers('UPDATE_TOKEN', {
+    this.notifyObservers('UPDATE_TOKEN', {
       cellId: lastLocationId
     })
   }
@@ -222,7 +222,7 @@ class GameEngine {
   }
 
   // mark current cell as complete or incomplete - depending upon the direction of move
-  private _updateCompletionStatus (currentCell: CellData, clickedCell: CellData): void {
+  private updateCompletionStatus (currentCell: CellData, clickedCell: CellData): void {
     // determine direction of move
     const direction = Utils.getDirection(currentCell, clickedCell)
   
@@ -294,7 +294,7 @@ class GameEngine {
   }
 
   // Method to notify observers
-  private _notifyObservers (msg: string, data: any) {
+  private notifyObservers (msg: string, data: any) {
     this.observers.forEach(observer => observer.update(msg, data))
   }
 }

@@ -20,21 +20,9 @@ class MenuUiEngine implements Observer {
     // This method is called by the Game class when it notifies observers
     switch (msg) {
       case 'SHOW_SUCCESS_MODAL':
-        this.showSuccessModal(data)
+        // this.showSuccessModal(data)
         break
     }
-  }
-
-  public showSuccessModal ({ score, starCount }: { score: number, starCount: number }): void {
-    // const title = SUCCESS_TITLES[starCount - 1]
-
-    // // update modal content (title, score, stars)
-    // this._titleElm!.textContent = title
-    // this._scoreElm!.textContent = `${score}`
-    // this._starsContainerElm!.innerHTML = Array(starCount).fill(null).map((_, index) => (`<div class="modal__star"></div>`)).join('')
-
-    // // show modal
-    // this._modalElm!.classList.add('modal--visible')
   }
 
   // private methods

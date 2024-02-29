@@ -2,21 +2,26 @@ import { CONFIG } from '../data/constants'
 import Observer from '../interfaces/Observer'
 import Cell from '../models/Cell'
 import GameEngine from './GameEngine'
+import MenuUiEngine from './MenuUiEngine'
 import CellData from '../types/CellData'
 import MapData from '../types/MapData'
 
 class UiEngine implements Observer {
   private _gameEngine: GameEngine
+  private _menuUiEngine: MenuUiEngine
   private _sceneTransform: { x: number, y: number } = { x: 0, y: 0 }
 
+  private _gameScreenElm!: HTMLElement
   private _sceneElm!: HTMLElement
   private _tokenElm!: HTMLElement
 
-  constructor (game: GameEngine) {
+  constructor (game: GameEngine, menuUi: MenuUiEngine) {
     this._gameEngine = game
+    this._menuUiEngine = menuUi
     
     // Add the Ui instance to the observers array
     this._gameEngine.addObserver(this)
+    this._menuUiEngine.addObserver(this)
   }
 
   update (msg: string, data: any) {
@@ -25,6 +30,10 @@ class UiEngine implements Observer {
     const { isFirstStart } = data
 
     switch (msg) {
+      case 'START_GAME':
+        this.startGame()
+        break
+
       case 'INIT_SCENE':
         // Call the initScene method with the data passed from the Game class
         this.initScene(data)
@@ -53,10 +62,20 @@ class UiEngine implements Observer {
     }
   }
 
+  private startGame (): void {
+    // since mostly everything is already initialized, just show the "game screen" element
+    this._gameScreenElm.classList.add('screen--visible')
+
+    this._gameEngine.startGame()
+  }
+
   // initialize scene (set scene dimensions, render tiles); triggered during first start and game restarts
   private initScene ({ isFirstStart, mapData }: { isFirstStart: boolean, mapData: MapData }): void {
     const { TILE_SIZE, TILE_GAP } = CONFIG
     const { positionCompensation, cells } = mapData
+
+    // get game screen element
+    this._gameScreenElm = document.getElementById('screen') as HTMLElement
 
     // get scene element
     this._sceneElm = document.getElementById('scene') as HTMLElement

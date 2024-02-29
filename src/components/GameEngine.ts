@@ -24,8 +24,6 @@ class GameEngine {
       isFirstStart: true,
       mapData: this._mapData
     })
-
-    this.startGame()
   }
 
   // NOTE: public methods

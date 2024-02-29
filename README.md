@@ -8,8 +8,8 @@
 - [X] Basic game
 - [x] Panning scene
 - [x] Connect multiple puzzles
+- [x] Home screen & Menu
 - [ ] Tutorial
-- [ ] Home screen & Menu
 - [ ] Scores
 - [ ] Settings: Themes & Music
 - [ ] User accounts

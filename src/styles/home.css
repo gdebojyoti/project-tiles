@@ -51,3 +51,10 @@
   border-color: rgba(236, 240, 241, 0.54);
   background-color: rgba(236, 240, 241, 0.3);
 }
+
+.home__footer {
+  position: absolute;
+  bottom: 20px;
+  font-size: 14px;
+  text-transform: lowercase;
+}

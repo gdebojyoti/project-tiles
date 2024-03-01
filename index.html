@@ -11,10 +11,19 @@
     <!-- font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;500&display=swap" rel="stylesheet"> 
   </head>
   <body>
-    <div id="screen" class="screen">
+    <div id="home" class="home">
+      <img class="home__logo">
+
+      <nav id="home-button-set" class="home__nav">
+        <button class="home__button home__button--primary" data-home-button="start">Start game</button>
+        <button class="home__button home__button--secondary" data-home-button="tutorial">How to play</button>
+      </nav>
+    </div>
+
+    <div id="screen" class="screen" style="display: none">
       <header class="header">
         <div class="step-counter-wrapper">
           Steps<br><span id="step-counter" class="step-counter">0</span>

@@ -126,7 +126,7 @@ class OverworldUiEngine implements Observer {
           If <strong>direction</strong> on tile <strong>matches</strong> token's direction, the tile will be <strong>highlighted</strong>.
         </li>
         <li>
-          <strong>Hightlight all tiles</strong> to complete the level.
+          <strong>Highlight all tiles</strong> to complete the level.
         </li>
       </ul>
     `

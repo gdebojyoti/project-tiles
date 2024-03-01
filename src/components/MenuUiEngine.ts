@@ -25,6 +25,12 @@ class MenuUiEngine implements Observer {
     }
   }
 
+  // TODO: This is a hack; this file has to be merged with OverworldUiEngine
+  showTutorialModal (): void {
+    // show tutorial modal
+    this.notifyObservers('SHOW_TUTORIAL', {})
+  }
+
   // private methods
   private init (): void {
     // identify modal elements
@@ -49,15 +55,14 @@ class MenuUiEngine implements Observer {
 
       switch (button) {
         case 'start':
-          // start game
-          console.log("starting game..")
           // hide self
           this._homeElm.classList.add('home--hidden')
+          // start game
           this.notifyObservers('START_GAME', {})
           break
         case 'tutorial':
           // show tutorial
-          console.log("showing tutorial..")
+          this.notifyObservers('SHOW_TUTORIAL', {})
           break
       }
     })

@@ -11,5 +11,5 @@ window.onload = async () => {
   const game = new GameEngine()
   const menuUi = new MenuUiEngine(game)
   new UiEngine(game, menuUi)
-  new OverworldUiEngine(game)
+  new OverworldUiEngine(game, menuUi)
 }

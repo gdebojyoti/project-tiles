@@ -1,6 +1,5 @@
 .modal {
   /* display: flex; */
-  display: none;
   justify-content: center;
   align-items: center;
   position: fixed;
@@ -10,7 +9,7 @@
   text-transform: none;
 }
 .modal--visible {
-  display: flex;
+  display: flex !important; /* important added to override the inline style */
 }
 
 .modal__inner {
@@ -45,7 +44,7 @@
 .modal__body {
   display: flex;
   flex-direction: column;
-  padding-block: 45px;
+  padding: 45px 25px;
   color: var(--wet-asphalt);
   font-size: 18px;
   background-color: #fff;
@@ -99,7 +98,10 @@
 }
 .modal__button--restart { background-image: url('../assets/icons/restart.png'); }
 .modal__button--home { background-image: url('../assets/icons/home.png'); }
-.modal__button--next { background-image: url('../assets/misc/play.png'); }
+.modal__button--play { background-image: url('../assets/misc/play.png'); }
+.modal__button--previous { background-image: url('../assets/icons/left.png'); }
+.modal__button--next { background-image: url('../assets/icons/right.png'); }
+.modal__button--okay { background-image: url('../assets/icons/okay.png'); }
 
 .modal__button--primary {
   background-color: var(--midnight-blue);
@@ -107,4 +109,13 @@
 
 .modal--success .modal__inner {
   max-width: 300px;
+}
+
+/* modal content styles */
+
+.modal__body > ul > li {
+  margin-top: 10px;
+}
+.modal__body > ul > li:first-of-type {
+  margin-top: 0;
 }

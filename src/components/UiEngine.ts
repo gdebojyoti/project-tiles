@@ -160,6 +160,14 @@ class UiEngine implements Observer {
             // undo the last step
             this._gameEngine.undo()
             break
+          case 'tutorial':
+            // show tutorial modal
+            this._menuUiEngine.showTutorialModal()
+            break
+          case 'home':
+            // go to home screen
+            // this._gameEngine.close()
+            break
           default:
             console.log('icon clicked:', icon)
         }

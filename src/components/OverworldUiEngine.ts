@@ -1,9 +1,11 @@
 import { SUCCESS_TITLES } from '../data/constants'
 import GameEngine from './GameEngine'
+import MenuUiEngine from './MenuUiEngine'
 import Observer from '../interfaces/Observer'
 
 class OverworldUiEngine implements Observer {
   private _gameEngine: GameEngine
+  private _menuUiEngine: MenuUiEngine
 
   private _modalElm!: HTMLElement
   private _titleElm!: HTMLElement
@@ -11,11 +13,16 @@ class OverworldUiEngine implements Observer {
   private _starsContainerElm!: HTMLElement
   private _modalButtonSetElm!: HTMLElement
 
-  constructor (game: GameEngine) {
+  private _commonModalElm!: HTMLElement
+
+  constructor (game: GameEngine, menuUi: MenuUiEngine) {
     this._gameEngine = game
+    this._menuUiEngine = menuUi
     
     // Add the Ui instance to the observers array
     this._gameEngine.addObserver(this)
+    this._menuUiEngine.addObserver(this)
+
     this.init()
   }
 
@@ -25,6 +32,9 @@ class OverworldUiEngine implements Observer {
     switch (msg) {
       case 'SHOW_SUCCESS_MODAL':
         this.showSuccessModal(data)
+        break
+      case 'SHOW_TUTORIAL':
+        this.showTutorialModal()
         break
     }
   }
@@ -50,7 +60,9 @@ class OverworldUiEngine implements Observer {
     this._starsContainerElm = document.getElementById('success-stars') as HTMLElement
     this._modalButtonSetElm = document.getElementById('modal-button-set') as HTMLElement
 
-    if (!this._modalElm || !this._titleElm || !this._scoreElm || !this._starsContainerElm) {
+    this._commonModalElm = document.getElementById('common-modal') as HTMLElement
+
+    if (!this._modalElm || !this._titleElm || !this._scoreElm || !this._starsContainerElm || !this._commonModalElm) {
       console.error('One or more critical UI elements missing')
       throw new Error('One or more critical UI elements missing')
       return
@@ -96,6 +108,88 @@ class OverworldUiEngine implements Observer {
 
     this._modalElm.classList.remove('modal--visible')
   }
+
+  private showTutorialModal (): void {
+    // decide modal title
+    const title = 'How to play'
+    
+    // decide modal content
+    const content = `
+      <ul>
+        <li>
+          <strong>Click tile</strong> to <strong>move token</strong>.
+        </li>
+        <li>
+          Only <strong>adjacent tiles</strong> can be clicked.
+        </li>
+        <li>
+          If <strong>direction</strong> on tile <strong>matches</strong> token's direction, the tile will be <strong>highlighted</strong>.
+        </li>
+        <li>
+          <strong>Hightlight all tiles</strong> to complete the level.
+        </li>
+      </ul>
+    `
+
+    // decide modal buttons
+    const buttonData = [
+      // { label: 'Retry', icon: 'retry', helperClasses: ['modal__button--restart'] },
+      // { label: 'Previous', icon: 'previous', helperClasses: ['modal__button--previous'] },
+      // { label: 'Next', icon: 'next', helperClasses: ['modal__button--next'] }
+      { label: 'Okay', icon: 'okay', helperClasses: ['modal__button--okay', 'modal__button--primary'] }
+    ]
+    const buttons = generateButtons(buttonData)
+
+    // generate and render modal
+    this.generateAndRenderModal(title, content, buttons)
+
+    // add click listener on modal button set
+    this.handleCommonModalButtonClick()
+  }
+
+  // TODO: This is auto-generated code; refactor it
+  private handleCommonModalButtonClick (): void {
+    this._commonModalElm.addEventListener('click', (event: Event) => {
+      // identify button clicked using data attribute (icon)
+      const target = event.target as HTMLElement
+      const icon = target.getAttribute('data-modal-icon')
+
+      switch (icon) {
+        case 'okay':
+          // hide the modal
+          this._commonModalElm.classList.remove('modal--visible')
+          break
+      }
+    })
+  }
+
+  private generateAndRenderModal (title: string, content: string, buttons: string): void {
+    // get header element using data attr and update title
+    const headerElm = this._commonModalElm.querySelector('[data-modal-part="header"]') as HTMLElement
+    headerElm.textContent = title
+
+    // get content element using data attr and update content
+    const contentElm = this._commonModalElm.querySelector('[data-modal-part="body"]') as HTMLElement
+    contentElm.innerHTML = content
+
+    // get button set element using data attr and update buttons
+    const buttonSetElm = this._commonModalElm.querySelector('[data-modal-part="footer"]') as HTMLElement
+    buttonSetElm.innerHTML = buttons
+
+    // show modal
+    this._commonModalElm.classList.add('modal--visible')
+  }
+}
+
+// get the list of buttons
+function generateButtons (buttonData: any): string {
+  return buttonData.map((button: any) => {
+    return `
+      <button class="modal__button ${button.helperClasses.join(' ')}" data-modal-icon="${button.icon}">
+        ${button.label}
+      </button>
+    `
+  }).join('')
 }
 
 export default OverworldUiEngine

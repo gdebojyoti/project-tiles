@@ -41,14 +41,15 @@
       <div id="token" class="token" style="opacity: 0"></div>
 
       <nav class="nav">
-        <span data-icon="restart" class="icon icon--restart">Restart</span>
+        <span data-icon="tutorial" class="icon icon--tutorial">Help</span>
         <span data-icon="undo" class="icon icon--undo">Undo</span>
-        <span data-icon="home" class="icon icon--home icon--disabled">Home</span>
-        <span data-icon="settings" class="icon icon--settings icon--disabled">Settings</span>
+        <span data-icon="restart" class="icon icon--restart">Restart</span>
+        <span data-icon="home" class="icon icon--home">Home</span>
+        <!-- <span data-icon="settings" class="icon icon--settings icon--disabled">Settings</span> -->
       </nav>
     </div>
 
-    <div id="success-modal" class="modal modal--success">
+    <div id="success-modal" class="modal modal--success" style="display: none">
       <div class="modal__inner">
         <h2 id="success-modal-header" class="modal__header">{title}</h2>
         <div class="modal__body">
@@ -66,8 +67,16 @@
         <div class="modal__footer" id="modal-button-set">
           <button id="modal-retry" class="modal__button modal__button--restart" data-modal-icon="retry">Retry</button>
           <!-- <button id="modal-home" class="modal__button modal__button--home" data-modal-icon="home">Home</button> -->
-          <button id="modal-next" class="modal__button modal__button--next modal__button--primary" data-modal-icon="next">Next</button>
+          <button id="modal-next" class="modal__button modal__button--play modal__button--primary" data-modal-icon="next">Next</button>
         </div>
+      </div>
+    </div>
+
+    <div id="common-modal" class="modal" style="display: none">
+      <div class="modal__inner">
+        <h2 data-modal-part="header" class="modal__header"></h2>
+        <div data-modal-part="body" class="modal__body"></div>
+        <div data-modal-part="footer" class="modal__footer" id="common-modal-button-set"></div>
       </div>
     </div>
   </body>

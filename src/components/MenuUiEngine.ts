@@ -19,8 +19,8 @@ class MenuUiEngine implements Observer {
     // Implementation of update method
     // This method is called by the Game class when it notifies observers
     switch (msg) {
-      case 'SHOW_SUCCESS_MODAL':
-        // this.showSuccessModal(data)
+      case 'CLOSE_GAME':
+        this._homeElm.classList.remove('home--hidden')
         break
     }
   }

@@ -59,6 +59,11 @@ class UiEngine implements Observer {
       case 'UPDATE_ALL_CELLS':
         this.updateAllCells(data.allCellData)
         break
+
+      case 'CLOSE_GAME':
+        this._gameScreenElm.classList.remove('screen--visible')
+        this._tokenElm.classList.remove('token--visible')
+        break
     }
   }
 
@@ -166,7 +171,7 @@ class UiEngine implements Observer {
             break
           case 'home':
             // go to home screen
-            // this._gameEngine.close()
+            this._gameEngine.close()
             break
           default:
             console.log('icon clicked:', icon)

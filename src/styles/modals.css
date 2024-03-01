@@ -113,6 +113,10 @@
 
 /* modal content styles */
 
+.modal__body > ul {
+  margin-left: 10px;
+}
+
 .modal__body > ul > li {
   margin-top: 10px;
 }

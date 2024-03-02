@@ -1,5 +1,6 @@
 import GameEngine from './GameEngine'
 import Observer from '../interfaces/Observer'
+import Analytics from '../services/Analytics'
 
 class MenuUiEngine implements Observer {
   private _gameEngine: GameEngine
@@ -59,10 +60,12 @@ class MenuUiEngine implements Observer {
           this._homeElm.classList.add('home--hidden')
           // start game
           this.notifyObservers('START_GAME', {})
+          Analytics.send('START_GAME')
           break
         case 'tutorial':
           // show tutorial
           this.notifyObservers('SHOW_TUTORIAL', {})
+          Analytics.send('SHOW_TUTORIAL')
           break
       }
     })

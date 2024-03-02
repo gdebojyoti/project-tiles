@@ -214,6 +214,21 @@ class GameEngine {
     }
   }
 
+  // stop the game
+  close (): void {
+    // reset the current level to 1
+    this._currentLevel = 1
+
+    // restart the game to reset all data & UI
+    this.restart()
+
+    // show the main menu
+    this.notifyObservers('CLOSE_GAME', {})
+
+    // hide the game UI
+    this.notifyObservers('HIDE_GAME_UI', {})
+  }
+
   // NOTE: private methods
 
   // Method to load map

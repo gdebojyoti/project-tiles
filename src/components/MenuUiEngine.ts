@@ -19,10 +19,16 @@ class MenuUiEngine implements Observer {
     // Implementation of update method
     // This method is called by the Game class when it notifies observers
     switch (msg) {
-      case 'SHOW_SUCCESS_MODAL':
-        // this.showSuccessModal(data)
+      case 'CLOSE_GAME':
+        this._homeElm.classList.remove('home--hidden')
         break
     }
+  }
+
+  // TODO: This is a hack; this file has to be merged with OverworldUiEngine
+  showTutorialModal (): void {
+    // show tutorial modal
+    this.notifyObservers('SHOW_TUTORIAL', {})
   }
 
   // private methods
@@ -49,15 +55,14 @@ class MenuUiEngine implements Observer {
 
       switch (button) {
         case 'start':
-          // start game
-          console.log("starting game..")
           // hide self
           this._homeElm.classList.add('home--hidden')
+          // start game
           this.notifyObservers('START_GAME', {})
           break
         case 'tutorial':
           // show tutorial
-          console.log("showing tutorial..")
+          this.notifyObservers('SHOW_TUTORIAL', {})
           break
       }
     })

@@ -10,18 +10,18 @@ img {
 
 /* colors */
 :root {
-  --base-light-color: #ecf0f1;
-  --base-dark-color: #333;
+  --base-light-color: #ecf0f1; /* to rgb: 236, 240, 241 */
+  --base-dark-color: #333; /* to rgb: 51, 51, 51 */
 
-  --crimson: #c0392b;
-  --azure: #2980b9;
-  --emerald: #2ecc71;
-  --amber: #f39c12;
-  --turquoise: #1abc9c;
+  --crimson: #c0392b; /* to rgb: 192, 57, 43 */
+  --azure: #2980b9; /* to rgb: 41, 128, 185 */
+  --emerald: #2ecc71; /* to rgb: 46, 204, 113 */
+  --amber: #f39c12; /* to rgb: 243, 156, 18 */
+  --turquoise: #1abc9c; /* to rgb: 26, 188, 156 */
   /* --green-sea: #16a085; */
 
-  --wet-asphalt: #34495e;
-  --midnight-blue: #2c3e50;
+  --wet-asphalt: #34495e; /* to rgb: 52, 73, 94 */
+  --midnight-blue: #2c3e50; /* to rgb: 44, 62, 80 */
 }
 
 html, body {
@@ -167,6 +167,7 @@ body {
 .icon--undo { background-image: url('../assets/icons/undo.png'); background-size: 33px; }
 .icon--restart { background-image: url('../assets/icons/restart.png'); }
 .icon--home { background-image: url('../assets/icons/home.png'); }
+.icon--tutorial { background-image: url('../assets/icons/how.png'); }
 .icon--settings { background-image: url('../assets/icons/settings.png'); }
 .icon--mute { background-image: url('../assets/icons/mute.png'); }
 .icon--unmute { background-image: url('../assets/icons/unmute.png'); }

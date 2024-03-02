@@ -9,7 +9,8 @@
 - [x] Panning scene
 - [x] Connect multiple puzzles
 - [x] Home screen & Menu
-- [ ] Tutorial
+- [x] Tutorial
+- [ ] Analytics
 - [ ] Scores
 - [ ] Settings: Themes & Music
 - [ ] User accounts

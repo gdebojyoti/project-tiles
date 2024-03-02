@@ -2,6 +2,7 @@ import { CONFIG } from '../data/constants'
 import CellData from '../types/CellData'
 import Observer from '../interfaces/Observer'
 import Utils from '../services/Utils'
+import Analytics from '../services/Analytics'
 
 class GameEngine {
   private _currentLevel: number = 1
@@ -320,6 +321,10 @@ class GameEngine {
     this.notifyObservers('SHOW_SUCCESS_MODAL', {
       score,
       starCount
+    })
+    Analytics.send('LEVEL_COMPLETE', {
+      level: this._currentLevel,
+      score,
     })
   }
 

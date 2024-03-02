@@ -12,6 +12,9 @@ abstract class Analytics {
           screen_name: 'home'
         })
         break
+      case 'LEVEL_COMPLETE':
+        this.sendEvent('level_complete', data)
+        break
     }
   }
 

@@ -10,7 +10,7 @@
 - [x] Connect multiple puzzles
 - [x] Home screen & Menu
 - [x] Tutorial
-- [ ] Analytics
+- [x] Analytics
 - [ ] Scores
 - [ ] Settings: Themes & Music
 - [ ] User accounts

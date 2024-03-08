@@ -213,7 +213,7 @@ class GameEngine {
       console.log('No more levels to load')
       Analytics.send('ALL_LEVELS_COMPLETE')
       alert(`
-        Congratulations! You completed all the levels.\n
+        Congratulations! You completed all the levels.
         Now go ask the developer for more (as well as your total score)..
       `)
     }

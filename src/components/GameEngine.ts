@@ -2,6 +2,7 @@ import { CONFIG } from '../data/constants'
 import CellData from '../types/CellData'
 import Observer from '../interfaces/Observer'
 import Utils from '../services/Utils'
+import Analytics from '../services/Analytics'
 
 class GameEngine {
   private _currentLevel: number = 1
@@ -210,7 +211,11 @@ class GameEngine {
       this.restart()
     } else {
       console.log('No more levels to load')
-      alert(`Congratulations! You completed all the levels!`)
+      Analytics.send('ALL_LEVELS_COMPLETE')
+      alert(`
+        Congratulations! You completed all the levels.
+        Now go ask the developer for more (as well as your total score)..
+      `)
     }
   }
 
@@ -320,6 +325,10 @@ class GameEngine {
     this.notifyObservers('SHOW_SUCCESS_MODAL', {
       score,
       starCount
+    })
+    Analytics.send('LEVEL_COMPLETE', {
+      level: this._currentLevel,
+      score,
     })
   }
 

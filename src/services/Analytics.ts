@@ -5,7 +5,7 @@ abstract class Analytics {
   public static send (event: string, data?: any): void {
     switch (event) {
       case 'START_GAME':
-        this.sendEvent('start_game', {})
+        this.sendEvent('start_game')
         break
       case 'SHOW_TUTORIAL':
         this.sendEvent('show_tutorial', {
@@ -14,6 +14,9 @@ abstract class Analytics {
         break
       case 'LEVEL_COMPLETE':
         this.sendEvent('level_complete', data)
+        break
+      case 'ALL_LEVELS_COMPLETE':
+        this.sendEvent('all_levels_complete')
         break
     }
   }

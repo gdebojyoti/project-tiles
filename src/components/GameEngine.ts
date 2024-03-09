@@ -196,7 +196,7 @@ class GameEngine {
   // check & load next level
   async checkAndLoadNextLevel (): Promise<void> {
     // check if there's a next level to load
-    if (this._currentLevel < CONFIG.LEVEL_COUNT) {
+    if (this._currentLevel < CONFIG.AVAILABLE_LEVEL_COUNT) {
       this._currentLevel++ // increment current level
       
       await this.loadMap(this._currentLevel) // load next map
@@ -252,6 +252,30 @@ class GameEngine {
         break
       case 3:
         mapData = await import('../data/maps/level-3.json')
+        break
+      case 4:
+        mapData = await import('../data/maps/level-4.json')
+        break
+      case 5:
+        mapData = await import('../data/maps/level-5.json')
+        break
+      case 6:
+        mapData = await import('../data/maps/level-6.json')
+        break
+      case 7:
+        mapData = await import('../data/maps/level-7.json')
+        break
+      case 8:
+        mapData = await import('../data/maps/level-8.json')
+        break
+      case 9:
+        mapData = await import('../data/maps/level-9.json')
+        break
+      case 10:
+        mapData = await import('../data/maps/level-10.json')
+        break
+      case 11:
+        mapData = await import('../data/maps/level-11.json')
         break
     }
 

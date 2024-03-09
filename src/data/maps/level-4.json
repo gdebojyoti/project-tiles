@@ -1,0 +1,45 @@
+{
+  "positionCompensation": {
+    "x": 20,
+    "y": 0
+  },
+  "cells": [
+    {
+      "isBase": true,
+      "id": "-1",
+      "col": 1,
+      "row": 1
+    },
+    {
+      "id": "1",
+      "col": 1,
+      "row": 2,
+      "dir": "DOWN"
+    },
+    {
+      "id": "2",
+      "col": 1,
+      "row": 3,
+      "dir": "LEFT"
+    },
+    {
+      "id": "3",
+      "col": 2,
+      "row": 1,
+      "dir": "RIGHT"
+    },
+    {
+      "id": "4",
+      "col": 2,
+      "row": 2,
+      "dir": "UP"
+    },
+    {
+      "id": "5",
+      "col": 2,
+      "row": 3,
+      "dir": "UP"
+    }
+  ],
+  "optimum": 5
+}

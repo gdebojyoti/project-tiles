@@ -7,7 +7,7 @@ import greenArrow from '../assets/green.png'
 export const CONFIG = {
   TILE_SIZE: 50,
   TILE_GAP: 10,
-  LEVEL_COUNT: 3
+  AVAILABLE_LEVEL_COUNT: 11
 }
 
 // directions

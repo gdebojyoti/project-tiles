@@ -123,3 +123,16 @@
 .modal__body > ul > li:first-of-type {
   margin-top: 0;
 }
+
+.inline-icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: center / contain no-repeat;
+  vertical-align: bottom;
+}
+.inline-icon--token { background-image: url('../assets/tokens/token-1.png'); }
+.inline-icon--right { background-image: url('../assets/red.png'); transform: rotate(90deg); }
+.inline-icon--down { background-image: url('../assets/green.png'); transform: rotate(180deg); }
+.inline-icon--left { background-image: url('../assets/blue.png'); transform: rotate(270deg); }
+.inline-icon--up { background-image: url('../assets/yellow.png'); }

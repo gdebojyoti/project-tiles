@@ -112,18 +112,26 @@ class OverworldUiEngine implements Observer {
   private showTutorialModal (): void {
     // decide modal title
     const title = 'How to play'
+
+    const directionsIcons = []
+    const directions = ['up', 'down', 'left', 'right']
+    for (let i = 0; i < directions.length; i++) {
+      directionsIcons.push(`<span class="inline-icon inline-icon--${directions[i]}"></span>`)
+    }
+
+    const tokenIcon = `<span class="inline-icon inline-icon--token"></span>`
     
     // decide modal content
     const content = `
       <ul>
         <li>
-          <strong>Click tile</strong> to <strong>move token</strong>.
+          <strong>Click tile</strong> to <strong>move token</strong> (${tokenIcon}).
         </li>
         <li>
           Only <strong>adjacent tiles</strong> can be clicked.
         </li>
         <li>
-          If <strong>direction</strong> on tile <strong>matches</strong> token's direction, the tile will be <strong>highlighted</strong>.
+          If <strong>direction</strong> (${directionsIcons.join(' , ')}) on tile <strong>matches</strong> token's direction, the tile will be <strong>highlighted</strong>.
         </li>
         <li>
           <strong>Highlight all tiles</strong> to complete the level.

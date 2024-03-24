@@ -23,7 +23,8 @@ img {
   --wet-asphalt: #34495e; /* to rgb: 52, 73, 94 */
   --midnight-blue: #2c3e50; /* to rgb: 44, 62, 80 */
 
-  --base-tile-color: #222c;
+  /* --base-tile-color: #222c; */
+  --base-tile-color: #ecf0f177;
 }
 
 html, body {

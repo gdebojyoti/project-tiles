@@ -20,7 +20,11 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "/app/*": ["app/*"]
+    }
   },
   "include": [
     "next-env.d.ts",
@@ -29,6 +33,7 @@
     "**/*.tsx"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "__temp"
   ]
 }

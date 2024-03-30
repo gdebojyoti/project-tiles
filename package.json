@@ -1,0 +1,24 @@
+{
+  "name": "project-tiles",
+  "version": "1.1.0",
+  "description": "Project Tiles is an immersive web-based game that offers a tranquil and engaging puzzle experience filled with vibrant colors",
+  "keywords": [],
+  "author": "Debojyoti Ghosh",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "next": "^14.1.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "20.12.2",
+    "@types/react": "^18.2.73",
+    "typescript": "5.4.3"
+  }
+}

@@ -22,6 +22,9 @@ img {
 
   --wet-asphalt: #34495e; /* to rgb: 52, 73, 94 */
   --midnight-blue: #2c3e50; /* to rgb: 44, 62, 80 */
+
+  /* --base-tile-color: #222c; */
+  --base-tile-color: #ecf0f177;
 }
 
 html, body {
@@ -38,6 +41,8 @@ body {
   /* background-image: linear-gradient(160deg, #EECDA3, #EF629F); */
   /* background-image: linear-gradient(160deg, red, blue); */
   background-size: 400% 400%;
+  opacity: 1;
+  transition: opacity .2s;
   overflow: hidden;
   user-select: none; /* prevent text selection since this is just a game */
   animation: animatedGradient 5s ease infinite;
@@ -94,9 +99,9 @@ body {
     /* transform: scale(1); */
   }
 }
-/* .cell--base {
-  background-color: #333a;
-} */
+.cell--base {
+  background-color: var(--base-tile-color);
+}
 .cell--complete .arrow {
   display: none;
 }

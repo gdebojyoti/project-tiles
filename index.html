@@ -12,11 +12,22 @@
     <!-- font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;500&display=swap" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;500&display=swap" rel="stylesheet"> -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;500&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+    <!-- inline styles -->
+    <style>
+      html, body {
+        background-color: #4CB8C4;
+      }
+      body {
+        opacity: 0;
+      }
+    </style>
   </head>
   <body>
     <div id="home" class="home">
-      <img class="home__logo">
+      <img class="home__logo" alt="Project Tiles logo">
 
       <nav id="home-button-set" class="home__nav">
         <button class="home__button home__button--primary" data-home-button="start">Start game</button>

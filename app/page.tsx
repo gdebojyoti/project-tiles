@@ -1,5 +1,19 @@
 import React from 'react'
 
-export default function Page() {
-  return <h1>I got in.</h1>
+import Logo from 'app/components/home/Logo'
+import Nav from 'app/components/home/Nav'
+import Footer from 'app/components/home/Footer'
+
+import styles from './page.module.css'
+
+const Home = () => {
+  return (
+    <div id="home" className={styles.home}>
+      <Logo />
+      <Nav />
+      <Footer />
+    </div>
+  )
 }
+
+export default Home

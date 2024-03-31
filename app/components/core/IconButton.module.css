@@ -1,0 +1,30 @@
+.button {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+  border: none;
+  color: var(--base-light-color);
+  background-color: transparent;
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, .3));
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.icon--undo { background-image: url('/public/misc/logo.png'); background-size: 33px; }
+.icon--restart { background-image: url('/public/misc/logo.png'); }
+.icon--home { background-image: url('/public/misc/logo.png'); }
+.icon--tutorial { background-image: url('/public/misc/logo.png'); }
+.icon--settings { background-image: url('/public/misc/logo.png'); }
+.icon--mute { background-image: url('/public/misc/logo.png'); }
+.icon--unmute { background-image: url('/public/misc/logo.png'); }
+.icon--disabled {
+  pointer-events: none;
+  opacity: .5;
+  filter: none;
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+}

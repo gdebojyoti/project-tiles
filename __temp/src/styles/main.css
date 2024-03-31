@@ -1,27 +1,8 @@
-
-
-.screen {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-}
 .screen--visible {
   display: flex !important; /* important added to override the inline style */
 }
 
-.pan-surface {
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-.scene {
-  position: relative;
-  transform: rotateX(55deg) rotateY(0deg) rotateZ(45deg);
-}
+
 
 .cell {
   position: absolute;
@@ -63,17 +44,7 @@
   pointer-events: none;
 }
 
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  padding-top: 25px;
-}
+
 .header .icon {
   position: absolute;
   right: 25px;
@@ -81,26 +52,7 @@
   height: 30px;
 }
 
-.step-counter-wrapper {
-  text-align: center;
-}
-.step-counter {
-  display: inline-block;
-  margin-top: 5px;
-  font-size: 25px;
-}
 
-.nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  z-index: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  padding: 0 25px 25px;
-}
 .nav .icon {
   margin-left: 35px;
 }
@@ -108,45 +60,8 @@
   margin-left: 0;
 }
 
-.icon {
-  display: flex;
-  align-items: flex-end;
-  height: 50px;
-  background: center top / 30px no-repeat;
-  filter: drop-shadow(0 0 2px rgba(0, 0, 0, .3));
-  cursor: pointer;
-}
-.icon--undo { background-image: url('../assets/icons/undo.png'); background-size: 33px; }
-.icon--restart { background-image: url('../assets/icons/restart.png'); }
-.icon--home { background-image: url('../assets/icons/home.png'); }
-.icon--tutorial { background-image: url('../assets/icons/how.png'); }
-.icon--settings { background-image: url('../assets/icons/settings.png'); }
-.icon--mute { background-image: url('../assets/icons/mute.png'); }
-.icon--unmute { background-image: url('../assets/icons/unmute.png'); }
-.icon--disabled {
-  pointer-events: none;
-  opacity: .5;
-  filter: none;
-}
 
-.token {
-  position: fixed;
-  top: 2px;
-  left: 20px;
-  width: 30px;
-  height: 30px;
-  /* opacity: 0; */ /* hidden by default via inline style */
-  background: url('../assets/tokens/token-1.png') center center / contain no-repeat;
-  border-radius: 50%;
-  transition: all .2s;
-  pointer-events: none;
-}
-.token--visible {
-  opacity: 1 !important; /* important added to override the inline style */
-}
-.token--skip-transition {
-  transition: none;
-}
+
 
 /* .shake {
   animation: shake .5s 1;

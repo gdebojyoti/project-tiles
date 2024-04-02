@@ -1,0 +1,14 @@
+.nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 125px;
+}
+
+.button {
+  margin-top: 30px;
+}
+.button:first-of-type {
+  margin-top: 0;
+}

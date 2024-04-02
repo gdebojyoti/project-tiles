@@ -2,65 +2,17 @@
 
 <html lang="en">
   <head>
-    <title>Project Tiles | Relaxing puzzles filled with vibrant colors</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="description" content="Project Tiles is an immersive web-based game that offers a tranquil and engaging puzzle experience filled with vibrant colors">
-    <meta name="keywords" content="Project Tiles, puzzle game, colorful challenges, relaxing pattern matching, brain teasers, casual gaming, interactive puzzles, web-based game">
-    <meta name="author" content="Debojyoti Ghosh">
-    <meta charset="UTF-8">
-
     <!-- font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <!-- <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;500&display=swap" rel="stylesheet"> -->
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;500&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
-
-    <!-- inline styles -->
-    <style>
-      html, body {
-        background-color: #4CB8C4;
-      }
-      body {
-        opacity: 0;
-      }
-    </style>
   </head>
   <body>
     <div id="home" class="home">
-      <img class="home__logo" alt="Project Tiles logo">
-
-      <nav id="home-button-set" class="home__nav">
-        <button class="home__button home__button--primary" data-home-button="start">Start game</button>
-        <button class="home__button home__button--secondary" data-home-button="tutorial">How to play</button>
-      </nav>
-
-      <div class="home__footer">Made with ❤️ by Debojyoti Ghosh</div>
     </div>
 
     <div id="screen" class="screen" style="display: none">
-      <header class="header">
-        <div class="step-counter-wrapper">
-          Steps<br><span id="step-counter" class="step-counter">0</span>
-        </div>
-
-        <span data-icon="mute" class="icon icon--mute"></span>
-      </header>
-
-      <div id="pan-surface" class="pan-surface">
-        <div id="scene-container">
-          <div id="scene" class="scene"></div>
-        </div>
-      </div>
-      
-      <div id="token" class="token" style="opacity: 0"></div>
-
-      <nav class="nav">
-        <span data-icon="tutorial" class="icon icon--tutorial">Help</span>
-        <span data-icon="undo" class="icon icon--undo">Undo</span>
-        <span data-icon="restart" class="icon icon--restart">Restart</span>
-        <span data-icon="home" class="icon icon--home">Home</span>
-        <!-- <span data-icon="settings" class="icon icon--settings icon--disabled">Settings</span> -->
-      </nav>
     </div>
 
     <div id="success-modal" class="modal modal--success" style="display: none">

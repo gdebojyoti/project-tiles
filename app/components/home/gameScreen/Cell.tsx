@@ -58,7 +58,7 @@ const Cell = ({ data, highestRow, onClick }) => {
   }, [data])
 
   return (
-    <div className={`${styles.cell} cell--${classNameSuffix} ${!dir && styles.base}`} ref={cellRef} onClick={() => onClick(id)}>
+    <div className={`${styles.cell} cell--${classNameSuffix} ${!dir && styles.base}`} ref={cellRef} onClick={() => onClick(id)} data-cell-id={id}>
       <img src={arrowImageSrc} className={`${styles.arrow} ${!arrowImageSrc && styles.none}`} ref={arrowRef} />
     </div>
   )

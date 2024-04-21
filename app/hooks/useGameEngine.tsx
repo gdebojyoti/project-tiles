@@ -41,11 +41,7 @@ const useGameEngine = () => {
     setIsInProgress(false)
   }, [steps])
 
-  // TODO: Remove the overlapping logic with `restart` method
   const startGame = (cellData: CellData[]): void => {
-    // start the game
-    setIsInProgress(true)
-  
     // get base cell
     const baseCell = cellData.find(({ isBase }) => isBase)
   
@@ -56,6 +52,28 @@ const useGameEngine = () => {
     
     // maintain state of occupied cell at the start
     setCurrentlyOccupiedCell(baseCell.id)
+
+    // start the game
+    setTimeout(() => {
+      setIsLevelComplete(false)
+      setIsInProgress(true)
+    }, 500)
+  }
+
+  const onRestart = (): void => {
+    const newCellData = [...cellData]
+
+    // reset the steps array
+    setSteps([])
+    
+    // reset the completion count of all cells
+    newCellData.forEach(cell => {
+      cell.stepResults = []
+    })
+
+    startGame(newCellData)
+
+    setCellData(newCellData)
   }
 
   // when user clicks on a cell / tile
@@ -101,8 +119,10 @@ const useGameEngine = () => {
     mapData,
     currentlyOccupiedCell,
     steps,
+    isInProgress,
     isLevelComplete,
-    onTileClick
+    onTileClick,
+    onRestart
   }
 }
 

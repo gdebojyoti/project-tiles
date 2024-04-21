@@ -12,8 +12,8 @@ import styles from './GameScreen.module.css'
 import { useEffect } from 'react'
 
 const GameScreen = () => {
-  const { mapData, steps, isLevelComplete, onTileClick } = useGameEngine()
-  console.log("mapData", mapData)
+  const { mapData, currentlyOccupiedCell, steps, isInProgress, isLevelComplete, onTileClick, onRestart } = useGameEngine()
+  // console.log("mapData", mapData)
 
   useEffect(() => {
     if (!isLevelComplete) {
@@ -31,9 +31,9 @@ const GameScreen = () => {
         <Scene mapData={mapData} onTileClick={onTileClick} />
       </PanSurface>
       
-      <Token shouldHide={false} />
+      <Token shouldHide={!isInProgress} currentlyOccupiedCell={currentlyOccupiedCell} />
 
-      <FooterNav />
+      <FooterNav onRestart={onRestart} />
     </div>
   )
 }

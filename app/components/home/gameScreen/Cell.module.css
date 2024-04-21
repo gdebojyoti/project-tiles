@@ -1,0 +1,43 @@
+.cell {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--base-light-color);
+  border-radius: 8px;
+  
+  opacity: 0;
+  /* transform: scale(0); */
+  animation: popin .4s ease-in-out forwards;
+}
+@keyframes popin {
+  0% {
+    opacity: 0;
+    /* transform: scale(0); */
+    translate: 20px 20px;
+  }
+  100% {
+    opacity: 1;
+    /* transform: scale(1); */
+  }
+}
+.base {
+  background-color: var(--base-tile-color);
+}
+.cell--complete .arrow {
+  display: none;
+}
+.cell--complete.cell--left { background-color: var(--azure); }
+.cell--complete.cell--right { background-color: var(--crimson); }
+.cell--complete.cell--up { background-color: var(--amber); }
+.cell--complete.cell--down { background-color: var(--emerald); }
+
+.arrow {
+  width: 60%;
+  height: 60%;
+  pointer-events: none;
+}
+
+.none {
+  display: none;
+}

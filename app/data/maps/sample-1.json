@@ -1,0 +1,98 @@
+{
+  "positionCompensation": {
+    "x": 40,
+    "y": -50
+  },
+  "cells": [
+    {
+      "isBase": true,
+      "id": "-1",
+      "col": 1,
+      "row": 1
+    },
+    {
+      "id": "2",
+      "col": 1,
+      "row": 2,
+      "dir": "DOWN"
+    },
+    {
+      "id": "delta-2",
+      "col": 1,
+      "row": 3,
+      "dir": "UP"
+    },
+    {
+      "id": "delta-3",
+      "col": 1,
+      "row": 6,
+      "dir": "UP"
+    },
+    {
+      "id": "delta-4",
+      "col": 1,
+      "row": 7,
+      "dir": "UP"
+    },
+    {
+      "id": "3",
+      "col": 2,
+      "row": 2,
+      "dir": "RIGHT"
+    },
+    {
+      "id": "4",
+      "col": 3,
+      "row": 2,
+      "dir": "RIGHT"
+    },
+    {
+      "id": "5",
+      "col": 4,
+      "row": 2,
+      "dir": "RIGHT"
+    },
+    {
+      "id": "6",
+      "col": 4,
+      "row": 3,
+      "dir": "UP"
+    },
+    {
+      "id": "7",
+      "col": 4,
+      "row": 4,
+      "dir": "UP"
+    },
+    {
+      "id": "8",
+      "col": 3,
+      "row": 4,
+      "dir": "LEFT"
+    },
+    {
+      "id": "9",
+      "col": 2,
+      "row": 4,
+      "dir": "LEFT"
+    },
+    {
+      "id": "10",
+      "col": 1,
+      "row": 4,
+      "dir": "DOWN"
+    },
+    {
+      "id": "11",
+      "col": 1,
+      "row": 5,
+      "dir": "LEFT"
+    },
+    {
+      "id": "12",
+      "col": 2,
+      "row": 5,
+      "dir": "UP"
+    }
+  ]
+}
